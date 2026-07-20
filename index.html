@@ -1,0 +1,345 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Nurrohmi Zaki | Portfolio</title>
+<style>
+  :root{
+    --bg:#181818;
+    --bg-alt:#1f1f1f;
+    --card:#242424;
+    --text:#f5f5f5;
+    --muted:#a8a8a8;
+    --accent:#f2762e;
+    --border:#333;
+  }
+  *{box-sizing:border-box;margin:0;padding:0;}
+  body{
+    font-family:'Segoe UI',Arial,sans-serif;
+    background:var(--bg);
+    color:var(--text);
+    line-height:1.6;
+  }
+  a{color:inherit;text-decoration:none;}
+  .container{
+    max-width:1100px;
+    margin:0 auto;
+    padding:0 24px;
+  }
+  section{padding:90px 0;}
+  h2{font-size:2.2rem;text-align:center;margin-bottom:12px;}
+  .subtitle{color:var(--muted);text-align:center;max-width:600px;margin:0 auto 50px;}
+  .accent{color:var(--accent);}
+
+  /* Navbar */
+  header{
+    position:sticky;top:0;z-index:100;
+    background:rgba(24,24,24,0.9);
+    backdrop-filter:blur(6px);
+    border-bottom:1px solid var(--border);
+  }
+  nav{
+    display:flex;align-items:center;justify-content:space-between;
+    padding:18px 24px;max-width:1100px;margin:0 auto;
+  }
+  .logo{font-weight:700;letter-spacing:1px;font-size:1.1rem;}
+  .nav-links{display:flex;gap:28px;list-style:none;}
+  .nav-links a{color:var(--muted);font-size:0.95rem;transition:color .2s;}
+  .nav-links a:hover{color:var(--text);}
+  .btn{
+    background:var(--accent);color:#fff;border:none;
+    padding:10px 22px;border-radius:6px;font-weight:600;cursor:pointer;
+    font-size:0.9rem;transition:opacity .2s;
+  }
+  .btn:hover{opacity:0.85;}
+
+  /* Hero / About Me */
+  #about .container{
+    display:flex;align-items:center;justify-content:space-between;gap:40px;flex-wrap:wrap;
+    padding-top:70px;padding-bottom:70px;
+  }
+  .about-text{flex:1;min-width:280px;}
+  .about-text .greet{color:var(--accent);font-weight:600;margin-bottom:6px;}
+  .about-text h1{font-size:2.8rem;line-height:1.2;margin-bottom:18px;}
+  .about-text p{color:var(--muted);max-width:460px;margin-bottom:28px;}
+  .avatar{
+    width:280px;height:280px;border-radius:50%;
+    background:linear-gradient(135deg,var(--accent),#c2410c);
+    display:flex;align-items:center;justify-content:center;
+    font-size:4rem;font-weight:700;color:#fff;
+    flex-shrink:0;border:6px solid var(--card);
+  }
+  .socials{display:flex;gap:14px;margin-top:22px;}
+  .socials a{
+    width:38px;height:38px;border-radius:50%;border:1px solid var(--border);
+    display:flex;align-items:center;justify-content:center;color:var(--muted);
+    transition:all .2s;
+  }
+  .socials a:hover{background:var(--accent);color:#fff;border-color:var(--accent);}
+
+  /* Skills */
+  #skills{background:var(--bg-alt);}
+  .skill-row{max-width:600px;margin:0 auto 26px;}
+  .skill-row .labels{display:flex;justify-content:space-between;margin-bottom:8px;font-weight:600;}
+  .bar{height:6px;background:var(--border);border-radius:4px;overflow:hidden;}
+  .bar-fill{height:100%;background:var(--accent);border-radius:4px;}
+
+  .services-grid{
+    display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));
+    gap:24px;margin-top:50px;
+  }
+  .service-card{
+    background:var(--card);padding:28px 24px;border-radius:10px;
+    border:1px solid var(--border);
+  }
+  .service-icon{
+    width:46px;height:46px;border-radius:8px;background:rgba(242,118,46,0.15);
+    color:var(--accent);display:flex;align-items:center;justify-content:center;
+    font-size:1.4rem;margin-bottom:16px;
+  }
+  .service-card h3{margin-bottom:8px;font-size:1.15rem;}
+  .service-card p{color:var(--muted);font-size:0.92rem;}
+
+  /* Portfolio */
+  .filters{display:flex;justify-content:center;gap:10px;flex-wrap:wrap;margin-bottom:40px;}
+  .filter-btn{
+    background:transparent;border:1px solid var(--border);color:var(--muted);
+    padding:8px 18px;border-radius:20px;cursor:pointer;font-size:0.9rem;transition:all .2s;
+  }
+  .filter-btn.active,.filter-btn:hover{background:var(--accent);color:#fff;border-color:var(--accent);}
+  .projects-grid{
+    display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:24px;
+  }
+  .project-card{
+    background:var(--card);border-radius:10px;overflow:hidden;border:1px solid var(--border);
+  }
+  .project-thumb{
+    height:180px;background:linear-gradient(135deg,#2a2a2a,#3a3a3a);
+    display:flex;align-items:center;justify-content:center;color:var(--muted);font-size:0.9rem;
+  }
+  .project-info{padding:18px 20px;}
+  .project-info .tag{color:var(--accent);font-size:0.8rem;font-weight:600;}
+  .project-info h4{margin-top:6px;font-size:1.05rem;}
+
+  /* Education & Experience */
+  .timeline{max-width:750px;margin:0 auto;position:relative;}
+  .timeline::before{
+    content:'';position:absolute;left:20px;top:0;bottom:0;width:2px;background:var(--border);
+  }
+  .timeline-item{position:relative;padding-left:60px;margin-bottom:36px;}
+  .timeline-item:last-child{margin-bottom:0;}
+  .timeline-dot{
+    position:absolute;left:12px;top:4px;width:18px;height:18px;border-radius:50%;
+    background:var(--accent);border:4px solid var(--bg);
+  }
+  .timeline-item .period{color:var(--accent);font-size:0.85rem;font-weight:600;margin-bottom:4px;}
+  .timeline-item h4{font-size:1.15rem;margin-bottom:2px;}
+  .timeline-item .place{color:var(--muted);font-size:0.9rem;margin-bottom:8px;}
+  .timeline-item p{color:var(--muted);font-size:0.92rem;}
+
+  #experience{background:var(--bg-alt);}
+
+  footer{
+    text-align:center;padding:30px 0;color:var(--muted);font-size:0.85rem;
+    border-top:1px solid var(--border);
+  }
+
+  @media (max-width:768px){
+    .nav-links{display:none;}
+    .about-text h1{font-size:2.1rem;}
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <nav>
+    <div class="logo">NURROHMI<span class="accent">ZAKI</span></div>
+    <ul class="nav-links">
+      <li><a href="#about">About</a></li>
+      <li><a href="#skills">Skills</a></li>
+      <li><a href="#portfolio">Portfolio</a></li>
+      <li><a href="#education">Education</a></li>
+      <li><a href="#experience">Experience</a></li>
+    </ul>
+    <button class="btn">Contact Me</button>
+  </nav>
+</header>
+
+<!-- ABOUT ME -->
+<section id="about">
+  <div class="container">
+    <div class="about-text">
+      <p class="greet">Hi, I am</p>
+      <h1>Nurrohmi Zaki<br><span class="accent">Full-Stack</span> Developer</h1>
+      <p>Fresh graduate in Informatics with hands-on experience in full-stack web development and custom software engineering — from company profile websites to warehouse management systems and desktop arcade software tailored to real business workflows.</p>
+      <button class="btn" onclick="location.href='mailto:nurrohmi.zaki@gmail.com'">Hire Me</button>
+      <div class="socials">
+        <a href="https://www.linkedin.com/in/nurrohmi-zaki-78b447294/" target="_blank" rel="noopener">In</a>
+        <a href="mailto:nurrohmi.zaki@gmail.com">✉</a>
+      </div>
+    </div>
+    <div class="avatar">NZ</div>
+  </div>
+</section>
+
+<!-- SKILLS -->
+<section id="skills">
+  <div class="container">
+    <h2>My <span class="accent">Skills</span></h2>
+    <p class="subtitle">Core skillsets from hands-on experience building full-stack web apps, business systems, and interactive software.</p>
+
+    <div class="skill-row">
+      <div class="labels"><span>Website Development</span><span>90%</span></div>
+      <div class="bar"><div class="bar-fill" style="width:90%"></div></div>
+    </div>
+    <div class="skill-row">
+      <div class="labels"><span>Software Development</span><span>85%</span></div>
+      <div class="bar"><div class="bar-fill" style="width:85%"></div></div>
+    </div>
+    <div class="skill-row">
+      <div class="labels"><span>Android Development</span><span>70%</span></div>
+      <div class="bar"><div class="bar-fill" style="width:70%"></div></div>
+    </div>
+    <div class="skill-row">
+      <div class="labels"><span>Quality Assurance</span><span>45%</span></div>
+      <div class="bar"><div class="bar-fill" style="width:45%"></div></div>
+    </div>
+
+    <div class="services-grid">
+      <div class="service-card">
+        <div class="service-icon">▢</div>
+        <h3>Web Development</h3>
+        <p>Full-stack responsive web apps using Next.js, React, TypeScript, JavaScript, and Tailwind CSS.</p>
+      </div>
+      <div class="service-card">
+        <div class="service-icon">◫</div>
+        <h3>Backend &amp; Database</h3>
+        <p>Relational database design and scalable backend architecture using Supabase (PostgreSQL).</p>
+      </div>
+      <div class="service-card">
+        <div class="service-icon">◧</div>
+        <h3>Desktop &amp; Game Software</h3>
+        <p>Desktop apps with Electron.js and interactive game systems with Roblox Studio &amp; Luau (Lua).</p>
+      </div>
+      <div class="service-card">
+        <div class="service-icon">◨</div>
+        <h3>Quality Assurance</h3>
+        <p>Functional testing, debugging, and performance optimization to ensure stable, reliable releases.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- PORTFOLIO -->
+<section id="portfolio">
+  <div class="container">
+    <h2>My <span class="accent">Projects</span></h2>
+    <p class="subtitle">A selection of systems and applications built for real clients and independent projects.</p>
+
+    <div class="filters">
+      <button class="filter-btn active" data-filter="all">All</button>
+      <button class="filter-btn" data-filter="web">Web</button>
+      <button class="filter-btn" data-filter="system">Business System</button>
+      <button class="filter-btn" data-filter="desktop">Desktop</button>
+      <button class="filter-btn" data-filter="game">Game</button>
+    </div>
+
+    <div class="projects-grid">
+      <div class="project-card" data-cat="web">
+        <div class="project-thumb">Project Thumbnail</div>
+        <div class="project-info">
+          <span class="tag">Web</span>
+          <h4>Company Profile Website</h4>
+        </div>
+      </div>
+      <div class="project-card" data-cat="system">
+        <div class="project-thumb">Project Thumbnail</div>
+        <div class="project-info">
+          <span class="tag">Business System</span>
+          <h4>Warehouse Management System</h4>
+        </div>
+      </div>
+      <div class="project-card" data-cat="desktop">
+        <div class="project-thumb">Project Thumbnail</div>
+        <div class="project-info">
+          <span class="tag">Desktop</span>
+          <h4>Arcade Game Software (Electron.js)</h4>
+        </div>
+      </div>
+      <div class="project-card" data-cat="game">
+        <div class="project-thumb">Project Thumbnail</div>
+        <div class="project-info">
+          <span class="tag">Game</span>
+          <h4>Roblox Game (Murasaki Creation)</h4>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- EDUCATION HISTORY -->
+<section id="education">
+  <div class="container">
+    <h2>Education <span class="accent">History</span></h2>
+    <p class="subtitle">Academic background in Informatics.</p>
+
+    <div class="timeline">
+      <div class="timeline-item">
+        <div class="timeline-dot"></div>
+        <div class="period">Sep 2021 - August 2025</div>
+        <h4>Bachelor's Degree in Informatics</h4>
+        <div class="place">University of Technology Yogyakarta</div>
+        <p>GPA 3.51 / 4.00</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- EXPERIENCE -->
+<section id="experience">
+  <div class="container">
+    <h2>Work <span class="accent">Experience</span></h2>
+    <p class="subtitle">Professional and independent development experience.</p>
+
+    <div class="timeline">
+      <div class="timeline-item">
+        <div class="timeline-dot"></div>
+        <div class="period">March 2026 - Present</div>
+        <h4>IT Developer (Freelance)</h4>
+        <div class="place">BLAST ID Event Organizer, Pemalang</div>
+        <p>Designed and developed a Company Profile Website, built a custom Warehouse Management System with inventory tracking and asset lending features, and developed a desktop-based Arcade Game Software using Electron.js. Designed relational databases and scalable backend architecture with Supabase (PostgreSQL), built responsive full-stack apps with Next.js, React, TypeScript, JavaScript, and Tailwind CSS, managed deployment via Vercel, and conducted functional testing and user training.</p>
+      </div>
+      <div class="timeline-item">
+        <div class="timeline-dot"></div>
+        <div class="period">August 2025 - February 2026</div>
+        <h4>Co-Founder &amp; Game Developer</h4>
+        <div class="place">Murasaki Creation (Independent Game Studio), Remote</div>
+        <p>Co-founded an independent Roblox game studio and led technical development of game systems and features using Roblox Studio and Luau (Lua). Collaborated remotely across the full development lifecycle, applying debugging, functional testing, and performance optimization, while designing modular, maintainable code for scalability.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<footer>
+  &copy; 2026 <span class="accent">Nurrohmi Zaki</span>. All Rights Reserved.
+</footer>
+
+<script>
+  const filterBtns = document.querySelectorAll('.filter-btn');
+  const cards = document.querySelectorAll('.project-card');
+  filterBtns.forEach(btn=>{
+    btn.addEventListener('click',()=>{
+      filterBtns.forEach(b=>b.classList.remove('active'));
+      btn.classList.add('active');
+      const f = btn.dataset.filter;
+      cards.forEach(c=>{
+        c.style.display = (f==='all' || c.dataset.cat===f) ? '' : 'none';
+      });
+    });
+  });
+</script>
+
+</body>
+</html>
