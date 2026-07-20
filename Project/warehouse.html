@@ -1,0 +1,292 @@
+<!doctype html>
+<html lang="id">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Sistem Manajemen Gudang — BLAST ID Event Organizer</title>
+  <meta name="description" content="Studi kasus: aplikasi web untuk mencatat stok inventaris, melacak peminjaman barang, dan mencetak laporan.">
+  <link rel="stylesheet" href="../assets/style.css">
+</head>
+<body>
+
+<div class="wrap">
+
+  <a class="backlink" href="../index.html">&larr; Semua project</a>
+
+  <header class="lede">
+    <div class="eyebrow"> BLAST ID Event Organizer · Aplikasi Internal</div>
+    <h1>Sistem manajemen gudang dan peminjaman barang</h1>
+    <p class="standfirst">
+      Aplikasi web untuk mencatat stok inventaris, melacak barang yang dipinjam,
+      dan mencetak laporan — menggantikan pencatatan spreadsheet yang selama ini
+      dikerjakan manual.
+    </p>
+  </header>
+
+  <dl class="facts">
+    <dt>Peran</dt>
+    <dd>Full-stack — desain database, backend, antarmuka, deployment</dd>
+    <dt>Jenis</dt>
+    <dd>Aplikasi internal untuk klien, dipakai staf gudang sehari-hari</dd>
+    <dt>Status</dt>
+    <dd>Live di produksi</dd>
+    <dt>Kode</dt>
+    <dd>Repositori privat — cuplikan representatif ada di bawah</dd>
+  </dl>
+
+  <section>
+    <h2>Masalah</h2>
+    <p>
+      Pencatatan stok dan peminjaman barang dikerjakan lewat spreadsheet yang
+      diisi bergantian oleh beberapa staf. Tiga hal yang paling sering jadi
+      sumber kesalahan:
+    </p>
+    <ul>
+      <li>
+        <strong>Stok dan peminjaman tidak terhubung.</strong> Barang keluar dicatat
+        di satu tempat, sisa stok di tempat lain, jadi keduanya cepat tidak sinkron.
+      </li>
+      <li>
+        <strong>Barang rusak dan hilang tidak punya tempat.</strong> Saat barang
+        kembali dalam kondisi tidak utuh, tidak jelas angkanya harus masuk ke kolom mana.
+      </li>
+      <li>
+        <strong>Tidak ada jejak siapa mencatat apa.</strong> Kalau angkanya
+        janggal, tidak ada cara menelusurinya.
+      </li>
+    </ul>
+  </section>
+
+  <section>
+    <h2>Pendekatan</h2>
+    <p>
+      Inti keputusan desainnya: <strong>stok bukan satu angka, tapi empat.</strong>
+      Setiap barang punya stok tersedia, rusak, maintenance, dan hilang secara
+      terpisah. Perpindahan antar keempatnya hanya boleh terjadi lewat transaksi
+      peminjaman dan pengembalian — tidak ada tombol &ldquo;edit stok&rdquo; yang bisa
+      dipakai menambal selisih tanpa jejak.
+    </p>
+    <p>
+      Konsekuensinya, angka stok selalu bisa dijelaskan asal-usulnya, dan laporan
+      bulanan tidak perlu direkonsiliasi manual lagi.
+    </p>
+  </section>
+
+  <section>
+    <h2>Model data</h2>
+    <p>
+      Tujuh model. Peminjaman sengaja dipecah jadi induk dan detail supaya satu
+      transaksi bisa memuat banyak barang, dan tiap barang bisa dikembalikan
+      terpisah dengan kondisi yang berbeda-beda.
+    </p>
+    <div class="tablewrap">
+      <table>
+        <thead>
+          <tr><th>Model</th><th>Perannya</th></tr>
+        </thead>
+        <tbody>
+          <tr><td>User</td><td>Akun staf, dengan peran ADMIN atau STAFF</td></tr>
+          <tr><td>Kategori</td><td>Pengelompokan barang</td></tr>
+          <tr><td>Barang</td><td>Item inventaris beserta empat jenis stoknya</td></tr>
+          <tr><td>Peminjam</td><td>Pihak yang meminjam, dipakai ulang antar transaksi</td></tr>
+          <tr><td>Peminjaman</td><td>Induk transaksi: siapa, kapan, keperluan, tenggat</td></tr>
+          <tr><td>PeminjamanDetail</td><td>Baris per barang, dengan status dan kondisi kembali sendiri</td></tr>
+          <tr><td>PengaturanApp</td><td>Kop instansi dan data tanda tangan untuk dokumen cetak</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  <section>
+    <h2>Fitur</h2>
+    <div class="features">
+      <div class="feature">
+        <h3>Inventaris</h3>
+        <p>Daftar barang dengan pencarian, filter kategori, dan paginasi di sisi server.</p>
+      </div>
+      <div class="feature">
+        <h3>Peminjaman multi-barang</h3>
+        <p>Satu transaksi memuat banyak item; stok berkurang otomatis saat transaksi dibuat.</p>
+      </div>
+      <div class="feature">
+        <h3>Pengembalian per item</h3>
+        <p>Tiap barang dikembalikan sendiri-sendiri dengan kondisi Baik, Rusak, atau Hilang — masing-masing masuk ke kolom stok yang berbeda.</p>
+      </div>
+      <div class="feature">
+        <h3>Notifikasi jatuh tempo</h3>
+        <p>Peminjaman yang lewat tenggat atau jatuh tempo hari ini ditandai di header.</p>
+      </div>
+      <div class="feature">
+        <h3>Pencarian global</h3>
+        <p>Satu kotak cari menjangkau barang dan transaksi sekaligus, dijalankan di database.</p>
+      </div>
+      <div class="feature">
+        <h3>Impor &amp; ekspor CSV</h3>
+        <p>Data barang bisa dimuat massal dari CSV, dan laporan diunduh dalam format yang langsung rapi di Excel.</p>
+      </div>
+      <div class="feature">
+        <h3>Laporan cetak</h3>
+        <p>Dokumen serah-terima dengan kop instansi dan blok tanda tangan yang bisa dikonfigurasi.</p>
+      </div>
+      <div class="feature">
+        <h3>Manajemen pengguna</h3>
+        <p>Admin mengelola akun staf; aksi sensitif dibatasi berdasarkan peran.</p>
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <h2>Tampilan</h2>
+
+    <!-- Setelah gambar dipasang, ganti isi div dengan:
+         <img src="../assets/img/dasbor.png" alt="Dasbor aplikasi">
+         dan tambahkan kelas "filled" pada div. -->
+    <div class="shot">Sisipkan tangkapan layar dasbor di sini</div>
+    <div class="shot">Sisipkan tangkapan layar halaman peminjaman di sini</div>
+  </section>
+
+  <section>
+    <h2>Teknologi</h2>
+    <div class="stack">
+      <span class="chip">Next.js 16</span>
+      <span class="chip">React 19</span>
+      <span class="chip">TypeScript</span>
+      <span class="chip">tRPC 11</span>
+      <span class="chip">Prisma</span>
+      <span class="chip">PostgreSQL</span>
+      <span class="chip">NextAuth v5</span>
+      <span class="chip">Zod</span>
+      <span class="chip">TanStack Query</span>
+      <span class="chip">Tailwind CSS</span>
+      <span class="chip">shadcn/ui</span>
+      <span class="chip">Vercel</span>
+    </div>
+    <p>
+      tRPC dipilih supaya tipe data mengalir dari skema database sampai ke
+      komponen tanpa perlu menulis ulang tipe di sisi klien — perubahan skema
+      langsung terlihat sebagai error kompilasi, bukan bug yang baru ketahuan
+      saat dipakai.
+    </p>
+  </section>
+
+  <section>
+    <h2>Beberapa keputusan teknis</h2>
+
+    <figure>
+      <figcaption>
+        <strong>1. Pengurangan stok dibungkus transaksi database.</strong>
+        Peminjaman multi-barang harus gagal seluruhnya kalau satu item saja
+        stoknya kurang — bukan setengah tercatat.
+      </figcaption>
+      <div class="code"><pre><span class="k">return await</span> prisma.$transaction(<span class="k">async</span> (tx) =&gt; {
+  <span class="c">// Cek &amp; kurangi stok semua barang dalam satu transaksi</span>
+  <span class="k">for</span> (<span class="k">const</span> item <span class="k">of</span> items) {
+    <span class="k">const</span> barang = <span class="k">await</span> tx.barang.findUnique({ where: { id: item.barangId } });
+    <span class="k">if</span> (!barang || barang.stok &lt; item.jumlah) {
+      <span class="k">throw new</span> TRPCError({
+        code: <span class="k">"BAD_REQUEST"</span>,
+        message: `Stok ${barang?.nama} tidak mencukupi`,
+      });
+    }
+    <span class="k">await</span> tx.barang.update({
+      where: { id: item.barangId },
+      data: { stok: { decrement: item.jumlah } },
+    });
+  }
+
+  <span class="k">return await</span> tx.peminjaman.create({ <span class="c">/* ... */</span> });
+});</pre></div>
+    </figure>
+
+    <figure>
+      <figcaption>
+        <strong>2. Otorisasi sebagai middleware, bukan pengecekan berulang.</strong>
+        Prosedur ditulis sebagai <code>protectedProcedure</code> atau
+        <code>adminProcedure</code>, jadi endpoint baru tidak bisa lupa dilindungi.
+      </figcaption>
+      <div class="code"><pre><span class="k">export const</span> protectedProcedure = t.procedure.use(({ ctx, next }) =&gt; {
+  <span class="k">if</span> (!ctx.session?.user) <span class="k">throw new</span> TRPCError({ code: <span class="k">"UNAUTHORIZED"</span> });
+  <span class="k">return</span> next({ ctx: { session: ctx.session } });
+});
+
+<span class="k">export const</span> adminProcedure = protectedProcedure.use(({ ctx, next }) =&gt; {
+  <span class="k">if</span> (ctx.session.user.role !== <span class="k">"ADMIN"</span>) <span class="k">throw new</span> TRPCError({ code: <span class="k">"FORBIDDEN"</span> });
+  <span class="k">return</span> next({ ctx });
+});</pre></div>
+    </figure>
+
+    <figure>
+      <figcaption>
+        <strong>3. Ekspor CSV disesuaikan dengan Excel yang benar-benar dipakai staf.</strong>
+        Detail kecil, tapi menentukan apakah file bisa langsung dipakai atau harus
+        dirapikan manual tiap kali.
+      </figcaption>
+      <div class="code"><pre><span class="c">// Pemisah ";" bukan ",": Excel dengan regional Indonesia memakai ";"
+// sebagai list separator — dengan koma, seluruh baris menumpuk di satu kolom.
+// Diawali BOM UTF-8: tanpa itu Excel membaca file sebagai ANSI dan
+// huruf beraksen jadi berantakan.</span>
+<span class="k">const</span> DELIMITER = <span class="k">";"</span>;
+<span class="k">const</span> BOM = <span class="k">"﻿"</span>;
+
+<span class="k">export function</span> buildCsv(headers, rows) {
+  <span class="k">const</span> lines = [headers, ...rows].map(r =&gt; r.map(escapeCell).join(DELIMITER));
+  <span class="k">return</span> BOM + lines.join(<span class="k">"\r\n"</span>);
+}</pre></div>
+    </figure>
+
+    <figure>
+      <figcaption>
+        <strong>4. Zona waktu ditangani di tempat yang benar.</strong>
+        Server berjalan di UTC, pengguna di WIB. Penyaringan kasar dilakukan di
+        database, penggolongan pasti &ldquo;terlambat&rdquo; vs &ldquo;jatuh tempo hari ini&rdquo;
+        dilakukan di browser memakai zona waktu pengguna — supaya batas tengah
+        malamnya benar menurut jam mereka.
+      </figcaption>
+      <div class="code"><pre><span class="c">// Longgar sampai +36 jam; penggolongan pastinya di sisi klien.</span>
+<span class="k">const</span> batas = <span class="k">new</span> Date(Date.now() + 36 * 60 * 60 * 1000);
+
+<span class="k">return await</span> prisma.peminjaman.findMany({
+  where: { status: <span class="k">"DIPINJAM"</span>, tanggalKembali: { not: <span class="k">null</span>, lte: batas } },
+  orderBy: { tanggalKembali: <span class="k">"asc"</span> },
+});</pre></div>
+    </figure>
+  </section>
+
+  <section>
+    <h2>Yang saya pelajari</h2>
+    <!-- GANTI SELURUH BAGIAN INI dengan kesulitan yang benar-benar kamu alami.
+         Teks di bawah hanya contoh bentuk penulisan, bukan kejadian nyata. -->
+    <p>
+      Bagian tersulit bukan fiturnya, tapi memodelkan kenyataan di gudang dengan
+      jujur. Versi pertama memakai satu kolom stok dan satu status kondisi per
+      barang. Model itu langsung runtuh begitu ada kasus nyata: sepuluh unit
+      dipinjam, tujuh kembali baik, dua rusak, satu hilang. Satu baris barang
+      tidak bisa berada di empat kondisi sekaligus.
+    </p>
+    <p>
+      Perbaikannya adalah memindahkan kondisi ke level baris transaksi, bukan
+      level barang. Pelajarannya: kalau sebuah field terasa sulit diisi,
+      biasanya masalahnya ada di model data, bukan di formulirnya.
+    </p>
+  </section>
+
+  <div class="note">
+    <p>
+      <strong>Catatan soal akses kode.</strong> Repositori bersifat privat karena
+      ini aplikasi internal klien. Cuplikan di halaman ini diambil langsung dari
+      basis kode produksi.
+    </p>
+    <p>
+      Demo dengan data contoh dan walkthrough kode bisa diatur atas permintaan.
+    </p>
+  </div>
+
+  <footer>
+    <p><a href="../index.html">&larr; Semua project</a></p>
+    <p>Nurrohmi Zaki — nurrohmi.zaki@gmail.com — <a href="https://www.linkedin.com/in/nurrohmi-zaki-78b447294/" target="_blank" rel="noopener">LinkedIn</a></p>
+  </footer>
+
+</div>
+
+</body>
+</html>

@@ -80,10 +80,23 @@
 
   /* Skills */
   #skills{background:var(--bg-alt);}
-  .skill-row{max-width:600px;margin:0 auto 26px;}
-  .skill-row .labels{display:flex;justify-content:space-between;margin-bottom:8px;font-weight:600;}
-  .bar{height:6px;background:var(--border);border-radius:4px;overflow:hidden;}
-  .bar-fill{height:100%;background:var(--accent);border-radius:4px;}
+  .skill-list{
+    list-style:none;
+    max-width:600px;
+    margin:0 auto;
+    display:flex;
+    flex-wrap:wrap;
+    justify-content:center;
+    gap:14px;
+  }
+  .skill-list li{
+    background:var(--card);
+    border:1px solid var(--border);
+    padding:10px 22px;
+    border-radius:24px;
+    font-weight:600;
+    font-size:0.95rem;
+  }
 
   .services-grid{
     display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));
@@ -190,22 +203,12 @@
     <h2>My <span class="accent">Skills</span></h2>
     <p class="subtitle">Core skillsets from hands-on experience building full-stack web apps, business systems, and interactive software.</p>
 
-    <div class="skill-row">
-      <div class="labels"><span>Website Development</span><span>90%</span></div>
-      <div class="bar"><div class="bar-fill" style="width:90%"></div></div>
-    </div>
-    <div class="skill-row">
-      <div class="labels"><span>Software Development</span><span>85%</span></div>
-      <div class="bar"><div class="bar-fill" style="width:85%"></div></div>
-    </div>
-    <div class="skill-row">
-      <div class="labels"><span>Android Development</span><span>70%</span></div>
-      <div class="bar"><div class="bar-fill" style="width:70%"></div></div>
-    </div>
-    <div class="skill-row">
-      <div class="labels"><span>Quality Assurance</span><span>45%</span></div>
-      <div class="bar"><div class="bar-fill" style="width:45%"></div></div>
-    </div>
+    <ul class="skill-list">
+      <li>Website Development</li>
+      <li>Software Development</li>
+      <li>Android Development</li>
+      <li>Quality Assurance</li>
+    </ul>
 
     <div class="services-grid">
       <div class="service-card">
@@ -254,13 +257,13 @@
           <h4>Company Profile Website</h4>
         </div>
       </div>
-      <div class="project-card" data-cat="system">
+      <a class="project-card" data-cat="system" href="Project/warehouse.html" style="display:block">
         <div class="project-thumb">Project Thumbnail</div>
         <div class="project-info">
           <span class="tag">Business System</span>
           <h4>Warehouse Management System</h4>
         </div>
-      </div>
+      </a>
       <div class="project-card" data-cat="desktop">
         <div class="project-thumb">Project Thumbnail</div>
         <div class="project-info">
