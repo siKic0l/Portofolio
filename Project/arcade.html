@@ -1,0 +1,275 @@
+<!doctype html>
+<html lang="id">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Super Spin — Arcade Wheel Software</title>
+  <meta name="description" content="Studi kasus: aplikasi desktop Electron untuk spinning wheel arcade dengan sistem hadiah, kuota, inventory lokal, dan mode jackpot, dipakai di acara-acara BLAST ID.">
+  <link rel="stylesheet" href="../Assets/style.css">
+</head>
+<body>
+
+<div class="wrap">
+
+  <a class="backlink" href="../index.html">&larr; Semua project</a>
+
+  <header class="lede">
+    <div class="eyebrow">BLAST ID Event Organizer · Aplikasi Desktop</div>
+    <h1>Super Spin — arcade spinning wheel software</h1>
+    <p class="standfirst">
+      Aplikasi desktop berbasis Electron untuk booth spinning wheel di acara —
+      berjalan offline, fullscreen di layar arcade, dengan panel admin untuk
+      mengatur hadiah, kuota, inventory, dan mode jackpot secara langsung di tempat acara.
+    </p>
+  </header>
+
+  <dl class="facts">
+    <dt>Peran</dt>
+    <dd>Solo developer — desain aplikasi, logika permainan, panel admin, build &amp; deployment</dd>
+    <dt>Jenis</dt>
+    <dd>Software desktop internal untuk operasional event, dipakai langsung di lokasi acara</dd>
+    <dt>Status</dt>
+    <dd>Dipakai aktif di acara-acara BLAST ID</dd>
+    <dt>Kode</dt>
+    <dd>Repositori privat — cuplikan representatif ada di bawah</dd>
+  </dl>
+
+  <section>
+    <h2>Masalah</h2>
+    <p>
+      Booth spinning wheel di acara butuh aplikasi yang bisa dijalankan panitia
+      non-teknis di lapangan, tanpa koneksi internet, dan tanpa risiko crash di
+      tengah acara. Tiga kebutuhan utamanya:
+    </p>
+    <ul>
+      <li>
+        <strong>Kontrol penuh atas peluang hadiah.</strong> Panitia perlu bisa
+        mengatur hadiah mana yang lebih sering keluar, dan membatasi jumlah
+        hadiah tertentu supaya stok fisik tidak habis sebelum acara selesai.
+      </li>
+      <li>
+        <strong>Harus tetap menarik saat idle.</strong> Booth yang layarnya diam
+        terlalu lama terlihat sepi dan tidak mengundang pengunjung untuk mencoba.
+      </li>
+      <li>
+        <strong>Harus bisa dikonfigurasi ulang di tempat.</strong> Nama hadiah,
+        gambar, warna, dan musik sering berubah tiap acara — tidak realistis
+        kalau harus edit kode dan build ulang tiap kali.
+      </li>
+    </ul>
+  </section>
+
+  <section>
+    <h2>Pendekatan</h2>
+    <p>
+      Aplikasi dibangun sebagai satu window Electron fullscreen dengan dua
+      lapisan: <strong>tampilan publik</strong> (wheel, animasi, efek) yang
+      dilihat pengunjung, dan <strong>panel admin</strong> tersembunyi yang
+      hanya diakses panitia lewat kombinasi tombol tertentu. Semua konfigurasi
+      — daftar hadiah, kuota, gambar, musik, screensaver — disimpan di
+      <code>localStorage</code>, jadi panitia bisa mengubahnya langsung di
+      lokasi acara tanpa perlu developer hadir atau build ulang aplikasi.
+    </p>
+    <p>
+      Peluang menang dihitung dengan <em>weighted random</em> berbasis persentase
+      <code>chance</code> per hadiah. Di atas itu ada sistem kuota opsional yang
+      otomatis menghitung ulang <code>chance</code> berdasarkan sisa stok hadiah,
+      dan mode jackpot yang membatasi hasil hanya ke hadiah utama dengan rasio
+      tetap — dipakai saat sesi tertentu ingin hasilnya lebih terprediksi. Hadiah
+      yang sedang tidak dipakai di wheel tidak dihapus, tapi dipindah ke
+      inventory lokal supaya bisa ditarik kembali kapan saja tanpa dibuat ulang.
+    </p>
+  </section>
+
+  <section>
+    <h2>Fitur</h2>
+    <div class="features">
+      <div class="feature">
+        <h3>Wheel dengan efek fisik</h3>
+        <p>Animasi putaran dengan easing custom, efek suara tick yang mengikuti kecepatan, dan hasil akhir presisi ke satu slot hadiah.</p>
+      </div>
+      <div class="feature">
+        <h3>Weighted random per hadiah</h3>
+        <p>Tiap hadiah punya persentase peluang sendiri, bisa diatur manual atau diseimbangkan otomatis lewat panel admin.</p>
+      </div>
+      <div class="feature">
+        <h3>Sistem kuota</h3>
+        <p>Peluang otomatis dihitung ulang dari sisa stok tiap hadiah; hadiah yang kuotanya habis otomatis berhenti keluar.</p>
+      </div>
+      <div class="feature">
+        <h3>Mode jackpot</h3>
+        <p>Membatasi hasil hanya ke hadiah utama dengan rasio tetap antar dua pilihan, untuk sesi jackpot tertentu.</p>
+      </div>
+      <div class="feature">
+        <h3>Panel admin di tempat</h3>
+        <p>Tambah/ubah/hapus hadiah, atur warna, gambar, dan tipe efek (normal, hadiah spesial, atau zonk) tanpa menyentuh kode.</p>
+      </div>
+      <div class="feature">
+        <h3>Inventory lokal</h3>
+        <p>Hadiah yang sedang tidak aktif di wheel disimpan sebagai inventory, tinggal ditarik masuk kapan saja tanpa harus dibuat ulang.</p>
+      </div>
+      <div class="feature">
+        <h3>Screensaver idle</h3>
+        <p>Slideshow otomatis muncul saat wheel tidak disentuh, menarik perhatian pengunjung yang lewat booth.</p>
+      </div>
+      <div class="feature">
+        <h3>Efek &amp; suara kemenangan</h3>
+        <p>Confetti dan fanfare untuk hadiah normal, efek berbeda untuk hadiah spesial dan untuk "zonk" (tidak menang).</p>
+      </div>
+      <div class="feature">
+        <h3>Aset bisa diganti langsung</h3>
+        <p>Background, musik latar, dan gambar screensaver bisa diunggah ulang dari panel admin, tersimpan lokal di aplikasi.</p>
+      </div>
+      <div class="feature">
+        <h3>Kontrol keyboard &amp; gamepad</h3>
+        <p>Bisa dipicu lewat klik, spasi/enter, atau tombol gamepad — fleksibel sesuai perangkat yang dipasang di booth.</p>
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <h2>Tampilan</h2>
+    <div class="shot filled"><img src="../Assets/spinwheel_wheel.png" alt="Tampilan utama wheel"></div>
+    <div class="shot filled"><img src="../Assets/spinwheel_prizecontrol.png" alt="Panel kontrol hadiah"></div>
+    <div class="shot filled"><img src="../Assets/spinwheel_localinventory.png" alt="Panel inventory lokal"></div>
+    <div class="shot filled"><img src="../Assets/spinwheel_customeffect.png" alt="Pengaturan efek kemenangan"></div>
+    <div class="shot filled"><img src="../Assets/spinwheel_changeassets.png" alt="Pengaturan aset (background, musik, screensaver)"></div>
+    <div class="shot filled"><img src="../Assets/spinwheel_realcase.png" alt="Booth spinning wheel di acara"></div>
+    <div class="shot filled"><img src="../Assets/spinwheel_realcase2.png" alt="Penggunaan booth di acara"></div>
+  </section>
+
+  <section>
+    <h2>Teknologi</h2>
+    <div class="stack">
+      <span class="chip">Electron</span>
+      <span class="chip">JavaScript</span>
+      <span class="chip">HTML5 Canvas</span>
+      <span class="chip">Web Audio API</span>
+      <span class="chip">Gamepad API</span>
+      <span class="chip">localStorage</span>
+      <span class="chip">electron-builder</span>
+    </div>
+    <p>
+      Dibangun sebagai satu file <code>index.html</code> tanpa framework
+      frontend, sengaja dijaga sederhana supaya mudah di-debug langsung di
+      lokasi acara tanpa proses build. Electron dipilih agar bisa berjalan
+      penuh offline dan di-package jadi installer atau <code>.exe</code>
+      portable yang tinggal dijalankan di PC arcade mana pun.
+    </p>
+  </section>
+
+  <section>
+    <h2>Beberapa keputusan teknis</h2>
+
+    <figure>
+      <figcaption>
+        <strong>1. Context isolation dijaga ketat di proses utama Electron.</strong>
+        <code>nodeIntegration</code> dimatikan dan komunikasi antara main
+        process dan halaman UI dibatasi lewat <code>preload.js</code>, supaya
+        aplikasi tetap aman meski kontennya sepenuhnya HTML/JS lokal.
+      </figcaption>
+      <div class="code"><pre><span class="k">const</span> mainWindow = <span class="k">new</span> BrowserWindow({
+  webPreferences: {
+    nodeIntegration: <span class="k">false</span>,
+    contextIsolation: <span class="k">true</span>,
+    preload: path.join(__dirname, <span class="k">'preload.js'</span>)
+  }
+});
+
+<span class="c">// preload.js — hanya expose satu event, tidak ada akses Node langsung ke UI</span>
+contextBridge.exposeInMainWorld(<span class="k">'electronAPI'</span>, {
+  onFullscreenChange: (cb) =&gt; ipcRenderer.on(<span class="k">'fullscreen-change'</span>, (_, val) =&gt; cb(val))
+});</pre></div>
+    </figure>
+
+    <figure>
+      <figcaption>
+        <strong>2. Kuota mengubah peluang, bukan menghapus hadiah.</strong>
+        Saat mode kuota aktif, <code>chance</code> tiap hadiah dihitung ulang
+        proporsional dari sisa kuotanya, dan hadiah yang kuotanya habis
+        cukup difilter keluar dari kandidat undian — bukan dihapus dari
+        wheel, supaya tampilannya tetap konsisten.
+      </figcaption>
+      <div class="code"><pre><span class="k">function</span> recalcChanceFromQuota() {
+  <span class="c">// Hanya hitung dari hadiah yang kuotanya belum habis</span>
+  <span class="k">const</span> total = activePrizes.reduce((sum, p) =&gt; {
+    <span class="k">const</span> q = quotaConfig.quotas[p.id] ?? 10;
+    <span class="k">return</span> sum + q;
+  }, 0);
+
+  activePrizes.forEach(p =&gt; {
+    <span class="k">const</span> q = quotaConfig.quotas[p.id] ?? 10;
+    p.chance = total &gt; 0 ? parseFloat(((q / total) * 100).toFixed(2)) : 0;
+  });
+  saveActive();
+}</pre></div>
+    </figure>
+
+    <figure>
+      <figcaption>
+        <strong>3. Undian dan animasi wheel dipisah total.</strong>
+        Hadiah pemenang ditentukan sekali di awal lewat <code>weightedRandom()</code>,
+        lalu animasi hanya menghitung sudut putaran menuju slot pemenang itu.
+        Hasil undian tidak pernah bergantung pada di mana wheel berhenti secara visual.
+      </figcaption>
+      <div class="code"><pre><span class="k">const</span> winner = weightedRandom();
+<span class="k">const</span> padded = getPadded();
+<span class="k">const</span> slotIdx = padded.findIndex(p =&gt; p.id === winner.id);
+
+<span class="c">// Sudut target dihitung dari slot pemenang yang sudah pasti,</span>
+<span class="c">// animasi hanya "mengejar" sudut ini dengan easing dan putaran ekstra</span>
+<span class="k">const</span> target = -(slotIdx * ARC + ARC / 2) - Math.PI / 2;</pre></div>
+    </figure>
+
+    <figure>
+      <figcaption>
+        <strong>4. Screensaver menghormati state aplikasi.</strong>
+        Idle timer tidak boleh memicu screensaver saat panel admin terbuka,
+        popup hadiah masih tampil, atau wheel sedang berputar — kalau tidak,
+        screensaver bisa muncul menimpa momen kemenangan pengunjung.
+      </figcaption>
+      <div class="code"><pre><span class="k">function</span> showScreensaver(){
+  <span class="k">if</span> (ssActive || ssHiding) <span class="k">return</span>;
+  <span class="k">if</span> (adminOpen()) { scheduleIdle(); <span class="k">return</span>; }
+  <span class="k">if</span> (popupOpen)   { scheduleIdle(); <span class="k">return</span>; }
+  <span class="k">if</span> (zonkOpen)    { scheduleIdle(); <span class="k">return</span>; }
+  <span class="k">if</span> (spinning)    { scheduleIdle(); <span class="k">return</span>; }
+  <span class="c">// ...tampilkan screensaver</span>
+}</pre></div>
+    </figure>
+  </section>
+
+  <section>
+    <h2>Yang saya pelajari</h2>
+    <p>
+      Tantangan terbesarnya bukan menulis logika undiannya, tapi merancang
+      aplikasi yang bisa dioperasikan panitia non-teknis di tengah keramaian
+      acara — tanpa developer standby. Itu berarti setiap kemungkinan
+      kesalahan input di panel admin harus ditangani dengan baik, dan setiap
+      state (spinning, popup terbuka, admin terbuka) harus saling menghormati
+      supaya tidak ada tampilan yang tabrakan di depan pengunjung.
+    </p>
+    <p>
+      Pelajaran lain: untuk software yang hidupnya di lapangan, kesederhanaan
+      arsitektur (satu file, tanpa build step untuk debugging cepat) kadang
+      lebih berharga daripada struktur kode yang "rapi" secara konvensional.
+    </p>
+  </section>
+
+  <div class="note">
+    <p>
+      <strong>Catatan soal akses kode.</strong> Repositori bersifat privat.
+      Cuplikan di halaman ini diambil langsung dari basis kode yang dipakai
+      di acara-acara BLAST ID.
+    </p>
+  </div>
+
+  <footer>
+    <p><a href="../index.html">&larr; Semua project</a></p>
+    <p>Nurrohmi Zaki — nurrohmi.zaki@gmail.com — <a href="https://www.linkedin.com/in/nurrohmi-zaki-78b447294/" target="_blank" rel="noopener">LinkedIn</a></p>
+  </footer>
+
+</div>
+
+</body>
+</html>
