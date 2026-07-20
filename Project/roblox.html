@@ -1,0 +1,359 @@
+<!doctype html>
+<html lang="id">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Kimi No Landly — Roblox Game</title>
+  <meta name="description" content="Studi kasus: game Roblox open-world social dengan memancing dan berkebun sebagai aktivitas utama, dibangun bersama co-founder di Murasaki Creation.">
+  <link rel="stylesheet" href="../Assets/style.css">
+</head>
+<body>
+
+<div class="wrap">
+
+  <a class="backlink" href="../index.html">&larr; Semua project</a>
+
+  <header class="lede">
+    <div class="eyebrow">Murasaki Creation · Independent Game Studio</div>
+    <h1>Kimi No Landly — open-world social game di Roblox</h1>
+    <p class="standfirst">
+      Game open-world dengan memancing dan berkebun (madu &amp; berry) sebagai
+      aktivitas utama pemain, dibangun bersama co-founder untuk menciptakan
+      ruang eksplorasi dan interaksi sosial yang santai antar pemain.
+    </p>
+  </header>
+
+  <dl class="facts">
+    <dt>Peran</dt>
+    <dd>Co-Founder &amp; Game Developer — sistem gameplay, scripting Luau, tools admin</dd>
+    <dt>Jenis</dt>
+    <dd>Game Roblox independen, dikembangkan bersama satu co-founder secara remote</dd>
+    <dt>Status</dt>
+    <dd>Aktif dikembangkan, Aug 2025 – Feb 2026</dd>
+    <dt>Kode</dt>
+    <dd>Project privat di Roblox Studio — cuplikan representatif ada di bawah</dd>
+  </dl>
+
+  <section>
+    <h2>Masalah</h2>
+    <p>
+      Untuk game open-world santai dengan fokus sosial, tantangannya bukan
+      membuat satu mekanik yang rumit, tapi membuat beberapa <strong>loop
+      aktivitas paralel</strong> yang terasa hidup tanpa saling mengganggu —
+      dan bisa dikembangkan berdua secara remote tanpa proses yang rumit.
+      Tiga kebutuhan utamanya:
+    </p>
+    <ul>
+      <li>
+        <strong>Memancing harus terasa berjenjang.</strong> Pemain baru dan
+        pemain lama harus sama-sama punya alasan untuk terus memancing —
+        rod yang lebih baik harus benar-benar mengubah peluang dapat ikan langka.
+      </li>
+      <li>
+        <strong>Berkebun harus terasa hidup meski di-idle-kan.</strong> Beehive
+        dan berry bush perlu tumbuh dari waktu ke waktu secara alami, bukan
+        instan saat diklik, supaya pemain punya alasan untuk kembali lagi nanti.
+      </li>
+      <li>
+        <strong>Sistem harus konsisten antar jenis resource.</strong> Madu dan
+        berry sama-sama tumbuh, tapi kalau tiap resource baru butuh sistem
+        pertumbuhan dari nol, pengembangan berdua jadi lambat.
+      </li>
+    </ul>
+  </section>
+
+  <section>
+    <h2>Pendekatan</h2>
+    <p>
+      Sistem memancing dirancang di sekitar <strong>rarity tabel per-rod</strong>:
+      tiap rod punya <em>attribute</em> sendiri (peluang Common sampai Secret),
+      jadi upgrade rod cukup mengubah angka attribute-nya di Studio tanpa
+      menyentuh kode inti. Ukuran ikan diacak lalu diskalakan mengikuti berat,
+      sehingga tangkapan langka juga terlihat lebih besar secara visual —
+      bukan cuma beda nama.
+    </p>
+    <p>
+      Untuk berkebun, dipakai satu <strong>pola pertumbuhan berbasis konfigurasi</strong>
+      yang sama untuk beehive maupun berry bush: siklus tunggu awal, bertambah
+      berat secara acak per interval, ukuran fisik mengikuti berat, sampai
+      siap dipanen lewat <code>ProximityPrompt</code>. Karena polanya sama,
+      menambah jenis resource baru tinggal menduplikasi konfigurasi, bukan
+      menulis sistem baru dari nol.
+    </p>
+    <p>
+      Dua fitur interaksi antar-pemain — <strong>carry (gendong) pemain lain</strong>
+      dan <strong>sync dance</strong> — sengaja dibangun dari nol karena
+      keduanya jadi inti pengalaman sosial yang ingin dihadirkan, bukan
+      sekadar pelengkap. Carry memakai <code>WeldConstraint</code> antar
+      <code>HumanoidRootPart</code> dua karakter dengan alur permintaan/persetujuan,
+      dan mendukung <em>chain</em> — satu pemain bisa menggendong pemain yang
+      sedang menggendong pemain lain, membentuk rantai. Sync dance membaca
+      animasi yang sedang diputar satu pemain secara real-time dan mereplikasinya
+      ke pemain lain dengan posisi waktu animasi yang sama, supaya dua pemain
+      benar-benar terlihat menari bersama, bukan cuma memutar animasi yang mirip.
+    </p>
+    <p>
+      Untuk fitur di luar gameplay inti — seperti sistem coba-pakai kostum
+      dan social feed antar pemain — kami mengintegrasikan SDK pihak ketiga
+      (Bloxbiz untuk virtual try-on outfit, Popfeed untuk social feed) alih-alih
+      membangunnya dari nol, supaya waktu pengembangan bisa difokuskan ke
+      loop gameplay utama dan ke dua fitur sosial custom di atas.
+    </p>
+  </section>
+
+  <section>
+    <h2>Fitur</h2>
+    <div class="features">
+      <div class="feature">
+        <h3>Carry pemain lain</h3>
+        <p>Gendong pemain lain (punggung/pundak) lewat alur request-accept, mendukung rantai carry berlapis, dengan cleanup otomatis saat mati atau disconnect. Dibangun dari nol.</p>
+      </div>
+      <div class="feature">
+        <h3>Sync dance</h3>
+        <p>Animasi tarian dua pemain direplikasi real-time dengan posisi waktu yang sama, jadi benar-benar terlihat menari bersama. Dibangun dari nol.</p>
+      </div>
+      <div class="feature">
+        <h3>Progressive Fishing System</h3>
+        <p>Setiap rod punya rarity odds sendiri, dari Common sampai Secret-tier catch yang jarang terjadi. Ukuran dan berat ikan di-generate secara acak dan diskalakan visual, jadi tangkapan langka juga terasa lebih epic saat dilihat.</p>
+      </div>
+      <div class="feature">
+        <h3>Berkebun madu &amp; berry</h3>
+        <p>Beehive dan berry bush tumbuh bertahap dari waktu ke waktu, ukurannya membesar seiring berat, dipanen lewat ProximityPrompt.</p>
+      </div>
+      <div class="feature">
+        <h3>Gacha aura dengan pity</h3>
+        <p>Roll aura berbasis rarity; setelah kalah 100 kali beruntun, roll berikutnya dijamin dapat Rare ke atas.</p>
+      </div>
+      <div class="feature">
+        <h3>Cash, level, &amp; streak harian</h3>
+        <p>Progresi XP/level dan sistem streak harian dengan efek visual (warna &amp; ukuran api) yang berubah sesuai panjang streak.</p>
+      </div>
+      <div class="feature">
+        <h3>Inventory &amp; transfer barang</h3>
+        <p>Pemain bisa menyimpan, memberi hadiah, dan transfer barang/aset ke pemain lain dengan batas transfer.</p>
+      </div>
+      <div class="feature">
+        <h3>Notifikasi tangkapan langka</h3>
+        <p>Tangkapan tingkat Secret disiarkan ke semua pemain di server sebagai momen bersama, bukan cuma milik penangkapnya.</p>
+      </div>
+      <div class="feature">
+        <h3>Tools admin</h3>
+        <p>Freecam, top bar admin, dan panel command khusus tim untuk moderasi dan debugging langsung di dalam game.</p>
+      </div>
+      <div class="feature">
+        <h3>Integrasi SDK sosial &amp; katalog</h3>
+        <p>Virtual try-on outfit dan social feed antar pemain diintegrasikan lewat SDK pihak ketiga (Bloxbiz, Popfeed).</p>
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <h2>Tampilan</h2>
+    <div class="shot">Sisipkan tangkapan layar dunia/eksplorasi di sini</div>
+    <div class="shot">Sisipkan tangkapan layar memancing di sini</div>
+    <div class="shot">Sisipkan tangkapan layar beehive/berry bush di sini</div>
+  </section>
+
+  <section>
+    <h2>Teknologi</h2>
+    <div class="stack">
+      <span class="chip">Roblox Studio</span>
+      <span class="chip">Luau</span>
+      <span class="chip">DataStoreService</span>
+      <span class="chip">ProximityPromptService</span>
+      <span class="chip">RemoteEvent / RemoteFunction</span>
+      <span class="chip">HttpService</span>
+      <span class="chip">Bloxbiz SDK (integrasi)</span>
+      <span class="chip">Popfeed SDK (integrasi)</span>
+    </div>
+    <p>
+      Data pemain (cash, level, streak, pity gacha, inventory) disimpan lewat
+      <code>DataStoreService</code> dengan cache lokal di memori supaya tidak
+      setiap aksi pemain langsung memanggil DataStore — hanya ditulis ulang
+      secara berkala atau saat perubahan penting terjadi.
+    </p>
+  </section>
+
+  <section>
+    <h2>Beberapa keputusan teknis</h2>
+
+    <figure>
+      <figcaption>
+        <strong>1. Carry mendukung rantai, bukan cuma satu pasang pemain.</strong>
+        Tiap chain menyimpan satu "root carrier" dan daftar pemain yang
+        digendong berurutan; hanya pemain paling bawah rantai yang boleh
+        menerima permintaan carry baru, supaya urutannya tidak kacau.
+      </figcaption>
+      <div class="code"><pre><span class="k">local function</span> canPlayerRequestCarry(player)
+  <span class="k">local</span> chainId = playerToChain[player.UserId]
+  <span class="k">if not</span> chainId <span class="k">then return true end</span> <span class="c">-- belum di rantai manapun, boleh</span>
+
+  <span class="k">local</span> chain = carryChains[chainId]
+  <span class="k">return</span> chain <span class="k">and</span> chain.rootCarrier == player <span class="c">-- hanya root yang boleh memperpanjang rantai</span>
+<span class="k">end</span>
+
+<span class="k">local function</span> carryOnBack(carrier, target)
+  <span class="k">local</span> carrierHRP = carrier.Character.Head
+  <span class="k">local</span> targetHRP = target.Character.Head
+
+  targetHum.PlatformStand = <span class="k">true</span> <span class="c">-- matikan kontrol gerak bawaan target</span>
+  targetHRP.CFrame = carrierHRP.CFrame * CFrame.new(0, 0.5, 1.5) * CFrame.Angles(0, math.rad(180), 0)
+
+  <span class="k">local</span> weld = Instance.new(<span class="k">"WeldConstraint"</span>)
+  weld.Name = <span class="k">"CarryWeld"</span>
+  weld.Part0 = carrierHRP
+  weld.Part1 = targetHRP
+  weld.Parent = carrierHRP
+<span class="k">end</span></pre></div>
+    </figure>
+
+    <figure>
+      <figcaption>
+        <strong>2. Sync dance membandingkan posisi waktu animasi, bukan cuma memutar animasi yang sama.</strong>
+        Tiap 0.05 detik, posisi waktu animasi host dibaca dan animasi milik
+        follower disesuaikan supaya tidak terlihat delay — dan otomatis
+        berhenti/tersambung ulang saat salah satu karakter respawn.
+      </figcaption>
+      <div class="code"><pre><span class="k">local</span> hostTracks = animator2:GetPlayingAnimationTracks()
+
+<span class="k">for</span> _, track <span class="k">in</span> pairs(hostTracks) <span class="k">do</span>
+  <span class="k">local</span> targetTimePosition = track.TimePosition
+  <span class="k">local</span> existingTrack = syncedAnimations[player.UserId][track.Animation.AnimationId]
+
+  <span class="k">if</span> existingTrack <span class="k">and</span> existingTrack.IsPlaying <span class="k">then</span>
+    <span class="k">local</span> difference = math.abs(existingTrack.TimePosition - targetTimePosition)
+    <span class="k">if</span> difference &gt;= syncThreshold <span class="k">then</span>
+      existingTrack.TimePosition = targetTimePosition <span class="c">-- koreksi kalau sudah mulai ngelag</span>
+    <span class="k">end</span>
+    existingTrack:AdjustSpeed(track.Speed)
+  <span class="k">end</span>
+<span class="k">end</span></pre></div>
+    </figure>
+
+    <figure>
+      <figcaption>
+        <strong>3. Rarity tangkapan dibaca dari attribute rod, bukan di-hardcode di kode.</strong>
+        Upgrade rod jadi soal mengubah angka di Studio, bukan mengedit script —
+        desainer bisa tuning peluang tanpa bantuan programmer.
+      </figcaption>
+      <div class="code"><pre><span class="k">local function</span> GetRodDetails(tool)
+  <span class="k">return</span> {
+    [<span class="k">"Common"</span>]    = tool:GetAttribute(<span class="k">"Common"</span>)    <span class="k">or</span> 75,
+    [<span class="k">"UnCommon"</span>]  = tool:GetAttribute(<span class="k">"UnCommon"</span>)  <span class="k">or</span> 50,
+    [<span class="k">"Rare"</span>]      = tool:GetAttribute(<span class="k">"Rare"</span>)      <span class="k">or</span> 30,
+    [<span class="k">"Epic"</span>]      = tool:GetAttribute(<span class="k">"Epic"</span>)      <span class="k">or</span> 20,
+    [<span class="k">"Legendary"</span>] = tool:GetAttribute(<span class="k">"Legendary"</span>) <span class="k">or</span> 10,
+    [<span class="k">"Secret"</span>]    = tool:GetAttribute(<span class="k">"Secret"</span>)    <span class="k">or</span> 0.000001,
+    <span class="c">-- ...tier secret lain, semua bisa diatur per-rod lewat attribute</span>
+  }
+<span class="k">end</span></pre></div>
+    </figure>
+
+    <figure>
+      <figcaption>
+        <strong>4. Pity system menjamin keadilan di atas gacha murni.</strong>
+        Pola weighted-random yang sama dipakai di project Arcade Wheel, ditambah
+        penghitung pity supaya pemain tidak bisa kalah selamanya secara statistik.
+      </figcaption>
+      <div class="code"><pre><span class="k">local</span> pity = loadPity(player)
+
+<span class="k">if</span> pity &gt;= PITY_LIMIT <span class="k">then</span>
+  pityUsed = <span class="k">true</span>
+  pity = 0
+  <span class="k">local</span> rareOrBetter = {}
+  <span class="k">for</span> _, aura <span class="k">in</span> ipairs(AURA_TABLE) <span class="k">do</span>
+    <span class="k">if</span> aura.Rarity == <span class="k">"Rare"</span> <span class="k">or</span> aura.Rarity == <span class="k">"Epic"</span> <span class="k">or</span> aura.Rarity == <span class="k">"Legendary"</span> <span class="k">then</span>
+      table.insert(rareOrBetter, aura)
+    <span class="k">end</span>
+  <span class="k">end</span>
+  finalAura = rollAura(rareOrBetter) <span class="c">-- roll ulang, tapi dari kandidat yang sudah difilter</span>
+<span class="k">else</span>
+  pity += 1
+  finalAura = rollAura(AURA_TABLE)
+<span class="k">end</span></pre></div>
+    </figure>
+
+    <figure>
+      <figcaption>
+        <strong>5. Satu pola pertumbuhan dipakai ulang untuk beehive dan berry bush.</strong>
+        Konfigurasi (waktu tunggu, kenaikan berat, ukuran) dipisah dari logikanya,
+        supaya resource baru cukup menyalin konfigurasi tanpa menulis loop baru.
+      </figcaption>
+      <div class="code"><pre><span class="k">local</span> CONFIG = {
+  minInitialWaitTime = 60, maxInitialWaitTime = 300,
+  minGrowthInterval  = 60, maxGrowthInterval  = 300,
+  minWeightIncrease  = 5,  maxWeightIncrease  = 20,
+  minHoneyWeight     = 0,  maxHoneyWeight     = 100,
+}
+
+<span class="k">while true do</span>
+  currentWeight += math.random(CONFIG.minWeightIncrease, CONFIG.maxWeightIncrease)
+  model.Size = Vector3.new(currentWeight/20, currentWeight/20, currentWeight/20)
+  prompt.ActionText = <span class="k">"Panen ("</span> .. math.floor(currentWeight) .. <span class="k">"g)"</span>
+  <span class="k">if</span> currentWeight &gt;= CONFIG.maxHoneyWeight <span class="k">then break end</span>
+  task.wait(math.random(CONFIG.minGrowthInterval, CONFIG.maxGrowthInterval))
+<span class="k">end</span></pre></div>
+    </figure>
+
+    <figure>
+      <figcaption>
+        <strong>6. Tangkapan langka jadi momen bersama, bukan cuma milik satu pemain.</strong>
+        Notifikasi Secret disiarkan ke seluruh server, memperkuat sisi sosial
+        dari game — pemain lain ikut senang (atau iri) melihat tangkapan besar.
+      </figcaption>
+      <div class="code"><pre><span class="k">if</span> result == <span class="k">"Secret"</span> <span class="k">and</span> materialType == <span class="k">"Secret"</span> <span class="k">then</span>
+  <span class="k">local</span> message = player.Name .. <span class="k">" Mendapatkan Secret "</span> .. fish.Name
+    .. <span class="k">" Dengan berat "</span> .. formatWeight(actualWeight)
+  remote:FireAllClients(<span class="k">"✨SERVER : "</span> .. message)
+  secretShowNotification:FireAllClients(message)
+<span class="k">end</span></pre></div>
+    </figure>
+  </section>
+
+  <section>
+    <h2>Yang saya pelajari</h2>
+    <p>
+      Membangun beberapa loop gameplay sekaligus (memancing, berkebun, gacha,
+      progresi) mengajarkan pentingnya <strong>pola yang bisa dipakai ulang</strong>
+      antar sistem yang terlihat berbeda tapi sebenarnya punya bentuk serupa —
+      beehive dan berry bush ternyata cukup satu pola pertumbuhan, bukan dua
+      sistem terpisah. Weighted random dengan pity di sini juga langsung
+      terasa familiar karena pola yang sama saya pakai di project Arcade Wheel,
+      cuma konteksnya beda.
+    </p>
+    <p>
+      Bekerja berdua secara remote juga mengajarkan pentingnya memisahkan
+      konfigurasi (angka rarity, timing pertumbuhan) dari logika inti, supaya
+      co-founder yang lebih fokus ke desain bisa tuning gameplay tanpa harus
+      menunggu saya mengubah kode setiap kali.
+    </p>
+    <p>
+      Fitur yang paling banyak menyita waktu justru dua yang paling terlihat
+      sederhana dari luar: <strong>carry</strong> dan <strong>sync dance</strong>.
+      Carry butuh banyak percobaan supaya posisi weld tidak "meleset" di client
+      lain akibat lag, dan supaya rantai carry tidak rusak saat salah satu
+      pemain di tengah rantai tiba-tiba disconnect atau mati. Sync dance
+      butuh threshold koreksi yang pas — terlalu ketat membuat animasi
+      tersentak-sentak, terlalu longgar membuat kedua pemain terlihat tidak
+      benar-benar sinkron. Keduanya dibangun dari nol tanpa asset/plugin
+      pihak ketiga, dan jadi bagian yang paling saya banggakan dari project ini.
+    </p>
+  </section>
+
+  <div class="note">
+    <p>
+      <strong>Catatan soal akses kode.</strong> Project bersifat privat,
+      dikembangkan bersama co-founder di Murasaki Creation. Cuplikan di halaman
+      ini diambil langsung dari basis kode game.
+    </p>
+  </div>
+
+  <footer>
+    <p><a href="../index.html">&larr; Semua project</a></p>
+    <p>Nurrohmi Zaki — nurrohmi.zaki@gmail.com — <a href="https://www.linkedin.com/in/nurrohmi-zaki-78b447294/" target="_blank" rel="noopener">LinkedIn</a></p>
+  </footer>
+
+</div>
+
+</body>
+</html>
