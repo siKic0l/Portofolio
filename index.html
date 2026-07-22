@@ -69,6 +69,10 @@
     display:flex;align-items:center;justify-content:center;
     font-size:4rem;font-weight:700;color:#fff;
     flex-shrink:0;border:6px solid var(--card);
+    overflow:hidden;
+  }
+  .avatar img{
+    width:100%;height:100%;object-fit:cover;
   }
   .socials{display:flex;gap:14px;margin-top:22px;}
   .socials a{
@@ -161,6 +165,13 @@
   @media (max-width:768px){
     .nav-links{display:none;}
     .about-text h1{font-size:2.1rem;}
+    #about .container{padding-top:50px;padding-bottom:50px;gap:28px;}
+  }
+
+  @media (max-width:360px){
+    .avatar{width:100%;max-width:240px;height:auto;aspect-ratio:1/1;}
+    .container{padding:0 16px;}
+    .about-text h1{font-size:1.8rem;}
   }
 </style>
 </head>
@@ -185,15 +196,15 @@
   <div class="container">
     <div class="about-text">
       <p class="greet">Hi, I am</p>
-      <h1>Nurrohmi Zaki<br><span class="accent">Full-Stack</span> Developer</h1>
-      <p>Fresh graduate in Informatics with hands-on experience in full-stack web development and custom software engineering — from company profile websites to warehouse management systems and desktop arcade software tailored to real business workflows.</p>
+      <h1>Nurrohmi Zaki<br><span class="accent">Full-Stack</span> Developer and QA Enthusiast</h1>
+      <p>Fresh graduate in Informatics with hands-on experience in full-stack web development and custom software engineering — from company profile websites to warehouse management systems and desktop arcade software tailored to real business workflows. Currently deepening my knowledge in Quality Assurance to build software that's not just functional, but reliably tested.</p>
       <button class="btn" onclick="location.href='mailto:nurrohmi.zaki@gmail.com'">Hire Me</button>
       <div class="socials">
         <a href="https://www.linkedin.com/in/nurrohmi-zaki-78b447294/" target="_blank" rel="noopener">In</a>
         <a href="mailto:nurrohmi.zaki@gmail.com">✉</a>
       </div>
     </div>
-    <div class="avatar">NZ</div>
+    <div class="avatar"><img src="Assets/profile.jpg" alt="Nurrohmi Zaki"></div>
   </div>
 </section>
 

@@ -255,8 +255,28 @@ footer{
 }
 footer p{margin-bottom:6px;}
 
+@media (max-width:768px){
+  .wrap{padding:40px 18px 60px;}
+  .lede h1{font-size:1.9rem;}
+  .standfirst{font-size:1rem;}
+  section{margin-bottom:44px;}
+  section h2{font-size:1.3rem;}
+  .facts{padding:18px 20px;gap:8px 16px;}
+  .features{grid-template-columns:1fr;}
+  .stack{gap:8px;}
+  .chip{font-size:0.8rem;padding:5px 12px;}
+  .code{padding:14px 16px;}
+  .code pre{font-size:0.78rem;}
+  table{font-size:0.85rem;}
+  thead th, tbody td{padding:10px 12px;}
+}
+
 @media (max-width:600px){
-  .lede h1{font-size:1.7rem;}
+  .lede h1{font-size:1.6rem;}
+  .eyebrow{font-size:0.78rem;}
   .facts{grid-template-columns:1fr;}
   .facts dt{margin-top:8px;}
+  .facts dt:first-child{margin-top:0;}
+  .shot{height:auto;min-height:140px;}
+  .note{padding:16px 18px;}
 }
