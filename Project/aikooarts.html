@@ -1,0 +1,234 @@
+<!doctype html>
+<html lang="id">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Aikoo Arts — Company Profile Website</title>
+  <meta name="description" content="Studi kasus: website company profile untuk Aikoo Arts, custom press-on nail art di Yogyakarta.">
+  <link rel="stylesheet" href="../Assets/style.css">
+</head>
+<body>
+
+<div class="wrap">
+
+  <a class="backlink" href="../index.html">&larr; Semua project</a>
+
+  <header class="lede">
+    <div class="eyebrow">Aikoo Arts · Company Profile Website</div>
+    <h1>Website company profile untuk brand custom nail art</h1>
+    <p class="standfirst">
+      Situs company profile untuk Aikoo Arts, bisnis custom press-on nail art
+      di Yogyakarta — menampilkan portofolio karya, workshop, dan alur order
+      yang langsung mengarahkan calon pembeli ke WhatsApp/Instagram.
+    </p>
+  </header>
+
+  <dl class="facts">
+    <dt>Peran</dt>
+    <dd>Full-stack — desain UI, layout, animasi, deployment</dd>
+    <dt>Jenis</dt>
+    <dd>Website company profile untuk klien UMKM</dd>
+    <dt>Status</dt>
+    <dd>Live — <a href="https://aikooarts.vercel.app/" target="_blank" rel="noopener">aikooarts.vercel.app</a></dd>
+    <dt>Kode</dt>
+    <dd>Repositori privat — <a href="https://github.com/siKic0l/aikooarts-showcase" target="_blank" rel="noopener">showcase publik ada di sini</a></dd>
+  </dl>
+
+  <section>
+    <h2>Masalah</h2>
+    <p>
+      Aikoo Arts sebelumnya hanya berjualan lewat Instagram — portofolio karya
+      tersebar di feed dan story yang sulit ditelusuri, dan calon pembeli tidak
+      punya satu tempat untuk melihat semua karya sekaligus sebelum memutuskan
+      order. Tiga kebutuhan utamanya:
+    </p>
+    <ul>
+      <li>
+        <strong>Portofolio harus mudah dijelajahi.</strong> Puluhan hasil karya
+        perlu ditampilkan rapi dalam satu galeri, bukan di-scroll satu-satu
+        lewat feed Instagram.
+      </li>
+      <li>
+        <strong>Alur order harus singkat.</strong> Dari lihat portofolio sampai
+        chat untuk order idealnya cuma beberapa klik, langsung ke WhatsApp
+        atau DM Instagram.
+      </li>
+      <li>
+        <strong>Kesan brand harus terasa dari desainnya sendiri.</strong> Aikoo
+        Arts punya identitas visual yang playful (maskot, warna cerah, font
+        pixel) — situsnya harus mencerminkan itu, bukan template generik.
+      </li>
+    </ul>
+  </section>
+
+  <section>
+    <h2>Pendekatan</h2>
+    <p>
+      Situs dibangun sebagai satu halaman statis (HTML/CSS/JS polos, tanpa
+      framework atau build step) supaya ringan dan gampang di-deploy sebagai
+      static site di Vercel. Galeri portofolio, workshop, dan foto "by request"
+      di-generate dari array nama file di <code>main.js</code>, bukan ditulis
+      manual satu-satu di HTML — menambah satu foto baru cukup menambah satu
+      baris di array, tidak perlu menyentuh markup.
+    </p>
+    <p>
+      Untuk kesan interaktif tanpa library animasi, dipakai
+      <code>IntersectionObserver</code> untuk efek scroll-reveal dan highlight
+      nav aktif — lebih murah dibanding listener <code>scroll</code> manual
+      yang butuh throttling. Ditambah sentuhan kecil berbasis posisi mouse
+      (parallax pada elemen dekorasi hero, glow yang mengikuti kursor) untuk
+      memperkuat kesan playful brand-nya.
+    </p>
+    <p>
+      Palet warna dan tipografi (font display <em>Fraunces</em>, font pixel
+      <em>Silkscreen</em>, font body <em>Baloo 2</em>) sengaja disesuaikan
+      dengan identitas visual Aikoo Arts sendiri — berbeda total dari gaya
+      gelap/teknis yang saya pakai di portofolio dan project lain, karena
+      desain di sini harus mengikuti brand klien, bukan selera saya.
+    </p>
+  </section>
+
+  <section>
+    <h2>Fitur</h2>
+    <div class="features">
+      <div class="feature">
+        <h3>Galeri data-driven</h3>
+        <p>Portofolio, workshop, dan foto by-request di-render dari array nama file, bukan HTML statis per foto.</p>
+      </div>
+      <div class="feature">
+        <h3>Scroll reveal & active nav</h3>
+        <p>Elemen muncul halus saat di-scroll, dan menu nav ikut ter-highlight sesuai section yang sedang dilihat — keduanya pakai IntersectionObserver.</p>
+      </div>
+      <div class="feature">
+        <h3>Hero parallax & cursor glow</h3>
+        <p>Elemen dekorasi hero bergerak halus mengikuti posisi mouse, plus glow lembut yang mengikuti kursor di desktop.</p>
+      </div>
+      <div class="feature">
+        <h3>Alur order langsung ke WhatsApp/IG</h3>
+        <p>Tombol order dan kontak langsung membuka WhatsApp atau DM Instagram, tanpa form perantara.</p>
+      </div>
+      <div class="feature">
+        <h3>Navigasi mobile</h3>
+        <p>Menu hamburger untuk layar kecil, otomatis tertutup setelah satu link nav diklik.</p>
+      </div>
+      <div class="feature">
+        <h3>Desain sesuai brand</h3>
+        <p>Warna, font, dan maskot ilustrasi disesuaikan dengan identitas visual Aikoo Arts yang playful.</p>
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <h2>Tampilan</h2>
+    <div class="shot filled"><img src="../Assets/companywebsite/aikooarts/hero.png" alt="Hero section Aikoo Arts"></div>
+    <div class="shot filled"><img src="../Assets/companywebsite/aikooarts/about.png" alt="About section Aikoo Arts"></div>
+    <div class="shot filled"><img src="../Assets/companywebsite/aikooarts/portofolio.png" alt="Portofolio grid Aikoo Arts"></div>
+    <div class="shot filled"><img src="../Assets/companywebsite/aikooarts/workshopandhowtoorder.png" alt="Workshop dan how to order Aikoo Arts"></div>
+  </section>
+
+  <section>
+    <h2>Teknologi</h2>
+    <div class="stack">
+      <span class="chip">HTML5</span>
+      <span class="chip">CSS3</span>
+      <span class="chip">Vanilla JavaScript</span>
+      <span class="chip">IntersectionObserver API</span>
+      <span class="chip">Google Fonts</span>
+      <span class="chip">Vercel</span>
+    </div>
+    <p>
+      Tidak ada framework atau build step sama sekali — situsnya cuma
+      <code>index.html</code>, <code>css/style.css</code>, dan
+      <code>js/main.js</code>. Untuk company profile sekelas ini, kompleksitas
+      tambahan dari framework tidak sepadan dengan manfaatnya, dan deploy ke
+      Vercel sebagai static site jadi jauh lebih sederhana.
+    </p>
+  </section>
+
+  <section>
+    <h2>Beberapa keputusan teknis</h2>
+
+    <figure>
+      <figcaption>
+        <strong>1. Galeri di-generate dari array, bukan ditulis manual.</strong>
+        Menambah foto baru ke portofolio cukup menambah satu angka di array
+        <code>portfolioNumbers</code>, tidak perlu menulis ulang HTML kartu foto.
+      </figcaption>
+      <div class="code"><pre><span class="k">const</span> portfolioNumbers = [1, 2, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15];
+<span class="k">const</span> portfolioPhotos = portfolioNumbers.map(n =&gt; <span class="k">`media/optimized/porto/porto${n}.jpg`</span>);
+
+portfolioGrid.innerHTML = portfolioPhotos.map((src, i) =&gt; <span class="k">`
+  &lt;div class="porto-card reveal"&gt;
+    &lt;div class="porto-thumb"&gt;&lt;img src="${src}" alt="Portofolio Aikoo Arts ${i + 1}" loading="lazy"&gt;&lt;/div&gt;
+  &lt;/div&gt;`</span>).join(<span class="k">''</span>);</pre></div>
+    </figure>
+
+    <figure>
+      <figcaption>
+        <strong>2. Scroll reveal pakai IntersectionObserver, bukan event scroll.</strong>
+        Elemen berhenti diamati begitu sudah pernah terlihat, jadi tidak ada
+        perhitungan ulang tiap frame scroll seperti pendekatan berbasis
+        <code>scroll</code> event.
+      </figcaption>
+      <div class="code"><pre><span class="k">const</span> io = <span class="k">new</span> IntersectionObserver((entries) =&gt; {
+  entries.forEach(entry =&gt; {
+    <span class="k">if</span> (entry.isIntersecting) {
+      entry.target.classList.add(<span class="k">'in-view'</span>);
+      io.unobserve(entry.target); <span class="c">// cukup sekali, lalu berhenti diamati</span>
+    }
+  });
+}, { threshold: 0.15 });
+revealEls.forEach(el =&gt; io.observe(el));</pre></div>
+    </figure>
+
+    <figure>
+      <figcaption>
+        <strong>3. Cursor glow dibatasi hanya untuk perangkat dengan mouse.</strong>
+        Efek ini di-skip di perangkat sentuh lewat media query
+        <code>hover: hover</code>, supaya tidak ada listener mousemove yang
+        tidak berguna (dan memboroskan baterai) di HP.
+      </figcaption>
+      <div class="code"><pre><span class="k">if</span> (cursorGlow &amp;&amp; window.matchMedia(<span class="k">'(hover: hover) and (pointer: fine)'</span>).matches) {
+  window.addEventListener(<span class="k">'mousemove'</span>, (e) =&gt; {
+    cursorGlow.style.opacity = <span class="k">'1'</span>;
+    cursorGlow.style.transform = <span class="k">`translate(${e.clientX}px, ${e.clientY}px) translate(-50%, -50%)`</span>;
+  });
+}</pre></div>
+    </figure>
+  </section>
+
+  <section>
+    <h2>Yang saya pelajari</h2>
+    <p>
+      Project ini melatih hal yang tidak muncul di project internal (warehouse,
+      arcade): mendesain untuk <strong>identitas visual orang lain</strong>,
+      bukan preferensi sendiri. Warna oranye-biru cerah, font pixel, dan maskot
+      lucu bukan gaya yang biasa saya pakai, tapi harus konsisten di setiap
+      section supaya terasa seperti satu brand yang utuh.
+    </p>
+    <p>
+      Pelajaran teknisnya: untuk situs se-sederhana company profile, tidak
+      semua hal butuh framework. Vanilla JS dengan
+      <code>IntersectionObserver</code> sudah cukup untuk interaksi yang terasa
+      halus, dan static hosting di Vercel jauh lebih murah dan sederhana
+      dibanding menyiapkan backend yang sebenarnya tidak dibutuhkan.
+    </p>
+  </section>
+
+  <div class="note">
+    <p>
+      <strong>Catatan soal akses kode.</strong> Repositori produksi bersifat
+      privat karena milik klien, tapi seluruh kode di sini bersih dari data
+      sensitif, jadi tersedia versi showcase publik yang identik dengan situs live.
+    </p>
+  </div>
+
+  <footer>
+    <p><a href="../index.html">&larr; Semua project</a></p>
+    <p>Nurrohmi Zaki — nurrohmi.zaki@gmail.com — <a href="https://www.linkedin.com/in/nurrohmi-zaki-78b447294/" target="_blank" rel="noopener">LinkedIn</a></p>
+  </footer>
+
+</div>
+
+</body>
+</html>
