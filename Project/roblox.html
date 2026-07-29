@@ -93,11 +93,24 @@
       benar-benar terlihat menari bersama, bukan cuma memutar animasi yang mirip.
     </p>
     <p>
-      Untuk fitur di luar gameplay inti — seperti sistem coba-pakai kostum
-      dan social feed antar pemain — kami mengintegrasikan SDK pihak ketiga
-      (Bloxbiz untuk virtual try-on outfit, Popfeed untuk social feed) alih-alih
+      Loop aktivitas lain — <strong>terbang</strong>, <strong>memasak</strong>,
+      dan <strong>menambang</strong> — masing-masing ditulis dari nol untuk
+      memperkaya hal yang bisa dilakukan pemain di dunia terbuka. Terbang
+      memakai fisika penuh (<code>VectorForce</code> + <code>AlignOrientation</code>)
+      dengan mekanik dash yang bisa dipakai sambil melayang, bukan sekadar
+      menaikkan <code>WalkSpeed</code>. Memasak memakai sistem resep berbasis
+      bahan hasil memancing/berkebun, dengan peluang gagal jadi "gosong" supaya
+      memasak tetap terasa ada risiko. Menambang memakai node mineral bertingkat
+      rarity dengan HP masing-masing, mirip pola weighted-random yang juga
+      dipakai di sistem memancing dan gacha.
+    </p>
+    <p>
+      Untuk fitur yang bukan inti gameplay — seperti confession wall, sistem
+      coba-pakai kostum, dan social feed antar pemain — kami mengintegrasikan
+      script/SDK pihak ketiga (Confession Wall dari kreator komunitas, Bloxbiz
+      untuk virtual try-on outfit, Popfeed untuk social feed) alih-alih
       membangunnya dari nol, supaya waktu pengembangan bisa difokuskan ke
-      loop gameplay utama dan ke dua fitur sosial custom di atas.
+      loop gameplay utama dan ke fitur sosial custom seperti carry dan sync dance.
     </p>
   </section>
 
@@ -129,6 +142,18 @@
         <p>Progresi XP/level dan sistem streak harian dengan efek visual (warna &amp; ukuran api) yang berubah sesuai panjang streak.</p>
       </div>
       <div class="feature">
+        <h3>Terbang (Wings)</h3>
+        <p>Sistem terbang berbasis fisika penuh dengan mekanik dash, auto-fold sayap saat idle, dan efek suara/kamera yang mengikuti kecepatan. Dibangun dari nol.</p>
+      </div>
+      <div class="feature">
+        <h3>Memasak</h3>
+        <p>Masak makanan dari bahan hasil memancing/berkebun lewat sistem resep; tiap masakan punya peluang gagal jadi "gosong".</p>
+      </div>
+      <div class="feature">
+        <h3>Menambang (Mining)</h3>
+        <p>Node mineral dengan tier rarity dan HP masing-masing; makin tinggi tier, makin banyak &amp; makin bagus hasil tambangnya.</p>
+      </div>
+      <div class="feature">
         <h3>Inventory &amp; transfer barang</h3>
         <p>Pemain bisa menyimpan, memberi hadiah, dan transfer barang/aset ke pemain lain dengan batas transfer.</p>
       </div>
@@ -141,6 +166,10 @@
         <p>Freecam, top bar admin, dan panel command khusus tim untuk moderasi dan debugging langsung di dalam game.</p>
       </div>
       <div class="feature">
+        <h3>Confession wall</h3>
+        <p>Papan pesan anonim antar pemain, dengan penyimpanan permanen dan batas satu post per hari. Diintegrasikan dari script kreator komunitas.</p>
+      </div>
+      <div class="feature">
         <h3>Integrasi SDK sosial &amp; katalog</h3>
         <p>Virtual try-on outfit dan social feed antar pemain diintegrasikan lewat SDK pihak ketiga (Bloxbiz, Popfeed).</p>
       </div>
@@ -149,9 +178,19 @@
 
   <section>
     <h2>Tampilan</h2>
-    <div class="shot">Sisipkan tangkapan layar dunia/eksplorasi di sini</div>
-    <div class="shot">Sisipkan tangkapan layar memancing di sini</div>
-    <div class="shot">Sisipkan tangkapan layar beehive/berry bush di sini</div>
+    <div class="shot filled"><img src="../Assets/roblox/first.png" alt="Dunia eksplorasi Kimi No Landly"></div>
+    <div class="shot filled"><img src="../Assets/roblox/fishing.png" alt="Aktivitas memancing"></div>
+    <div class="shot filled"><img src="../Assets/roblox/fishcatch.png" alt="Hasil tangkapan ikan"></div>
+    <div class="shot filled"><img src="../Assets/roblox/berryfarm.png" alt="Berkebun berry"></div>
+    <div class="shot filled"><img src="../Assets/roblox/fly.png" alt="Sistem terbang dengan Wings"></div>
+    <div class="shot filled"><img src="../Assets/roblox/cooking.png" alt="Sistem memasak"></div>
+    <div class="shot filled"><img src="../Assets/roblox/mining.png" alt="Sistem menambang"></div>
+    <div class="shot filled"><img src="../Assets/roblox/aura.png" alt="Gacha aura"></div>
+    <div class="shot filled"><img src="../Assets/roblox/carry.png" alt="Fitur carry pemain lain"></div>
+    <div class="shot filled"><img src="../Assets/roblox/syncdance.png" alt="Fitur sync dance"></div>
+    <div class="shot filled"><img src="../Assets/roblox/giftitem.png" alt="Fitur gift item"></div>
+    <div class="shot filled"><img src="../Assets/roblox/confessionwall.png" alt="Confession wall"></div>
+    <div class="shot filled"><img src="../Assets/roblox/bubblegun.png" alt="Aktivitas bubble gun"></div>
   </section>
 
   <section>
@@ -163,8 +202,11 @@
       <span class="chip">ProximityPromptService</span>
       <span class="chip">RemoteEvent / RemoteFunction</span>
       <span class="chip">HttpService</span>
+      <span class="chip">VectorForce / AlignOrientation</span>
+      <span class="chip">CollectionService</span>
       <span class="chip">Bloxbiz SDK (integrasi)</span>
       <span class="chip">Popfeed SDK (integrasi)</span>
+      <span class="chip">Confession Wall script (integrasi)</span>
     </div>
     <p>
       Data pemain (cash, level, streak, pity gacha, inventory) disimpan lewat
@@ -179,7 +221,47 @@
 
     <figure>
       <figcaption>
-        <strong>1. Carry mendukung rantai, bukan cuma satu pasang pemain.</strong>
+        <strong>1. Terbang pakai gaya fisika, bukan sekadar menaikkan WalkSpeed.</strong>
+        <code>VectorForce</code> mendorong karakter ke arah gerak kamera,
+        sementara <code>AlignOrientation</code> mengatur kemiringan tubuh —
+        supaya terbang terasa seperti terbang sungguhan, lengkap dengan momentum
+        dan drag saat berhenti.
+      </figcaption>
+      <div class="code"><pre><span class="k">if</span> moveDirection.Magnitude &gt; 0.1 <span class="k">then</span>
+  VectorForce.Force = cameraRelativeDirection * Config.ThrustForce * moveDirection.Magnitude
+  dragSound.Volume = lerp(dragSound.Volume, 0, 0.15, <span class="k">true</span>)
+<span class="k">else</span>
+  VectorForce.Force = Vector3.zero <span class="c">-- tidak ada input, biarkan drag yang memperlambat</span>
+  dragSound.Volume = lerp(dragSound.Volume, speed * 0.2, 0.15, <span class="k">true</span>)
+<span class="k">end</span>
+
+LinearVelocity.MaxForce = Config.BaseDrag + speed * Config.DragMultiplier</pre></div>
+    </figure>
+
+    <figure>
+      <figcaption>
+        <strong>2. Memasak dilakukan per-batch dengan peluang gagal per item.</strong>
+        Memasak 10 porsi sekaligus tidak menjamin 10 porsi sukses — tiap item
+        dicek <code>Chance</code>-nya sendiri, dan yang gagal jadi "Burned Food",
+        bukan hilang begitu saja.
+      </figcaption>
+      <div class="code"><pre><span class="k">for</span> i = 1, quantity <span class="k">do</span>
+  task.wait(recipe.CookTime)
+
+  <span class="k">local</span> chance = math.random()
+  <span class="k">if</span> chance &lt;= recipe.Chance <span class="k">then</span>
+    successCount += 1
+    CookedFood:FindFirstChild(recipe.Result):Clone().Parent = player.Backpack
+  <span class="k">else</span>
+    failCount += 1
+    CookedFood:FindFirstChild(<span class="k">"Burned Food"</span>):Clone().Parent = player.Backpack
+  <span class="k">end</span>
+<span class="k">end</span></pre></div>
+    </figure>
+
+    <figure>
+      <figcaption>
+        <strong>3. Carry mendukung rantai, bukan cuma satu pasang pemain.</strong>
         Tiap chain menyimpan satu "root carrier" dan daftar pemain yang
         digendong berurutan; hanya pemain paling bawah rantai yang boleh
         menerima permintaan carry baru, supaya urutannya tidak kacau.
@@ -209,7 +291,7 @@
 
     <figure>
       <figcaption>
-        <strong>2. Sync dance membandingkan posisi waktu animasi, bukan cuma memutar animasi yang sama.</strong>
+        <strong>4. Sync dance membandingkan posisi waktu animasi, bukan cuma memutar animasi yang sama.</strong>
         Tiap 0.05 detik, posisi waktu animasi host dibaca dan animasi milik
         follower disesuaikan supaya tidak terlihat delay — dan otomatis
         berhenti/tersambung ulang saat salah satu karakter respawn.
@@ -232,7 +314,7 @@
 
     <figure>
       <figcaption>
-        <strong>3. Rarity tangkapan dibaca dari attribute rod, bukan di-hardcode di kode.</strong>
+        <strong>5. Rarity tangkapan dibaca dari attribute rod, bukan di-hardcode di kode.</strong>
         Upgrade rod jadi soal mengubah angka di Studio, bukan mengedit script —
         desainer bisa tuning peluang tanpa bantuan programmer.
       </figcaption>
@@ -251,7 +333,7 @@
 
     <figure>
       <figcaption>
-        <strong>4. Pity system menjamin keadilan di atas gacha murni.</strong>
+        <strong>6. Pity system menjamin keadilan di atas gacha murni.</strong>
         Pola weighted-random yang sama dipakai di project Arcade Wheel, ditambah
         penghitung pity supaya pemain tidak bisa kalah selamanya secara statistik.
       </figcaption>
@@ -275,7 +357,31 @@
 
     <figure>
       <figcaption>
-        <strong>5. Satu pola pertumbuhan dipakai ulang untuk beehive dan berry bush.</strong>
+        <strong>7. Node mineral dipilih dengan rarity berbobot, sama seperti sistem gacha.</strong>
+        Common sampai Legendary punya <code>Weight</code> beda, dan makin tinggi
+        tier-nya makin banyak HP-nya dan makin banyak hasil tambang yang keluar.
+      </figcaption>
+      <div class="code"><pre><span class="k">local</span> TIER_CONFIG = {
+  Common    = { HP = 1000,  Weight = 100, MinDrops = 1, MaxDrops = 1 },
+  Rare      = { HP = 5000,  Weight = 25,  MinDrops = 2, MaxDrops = 3 },
+  Legendary = { HP = 25000, Weight = 2,   MinDrops = 5, MaxDrops = 10 },
+}
+
+<span class="k">local function</span> getRandomTier()
+  <span class="k">local</span> totalWeight = 0
+  <span class="k">for</span> _, data <span class="k">in</span> pairs(TIER_CONFIG) <span class="k">do</span> totalWeight += data.Weight <span class="k">end</span>
+  <span class="k">local</span> randomNum = math.random(1, totalWeight)
+  <span class="k">local</span> currentCount = 0
+  <span class="k">for</span> tierName, data <span class="k">in</span> pairs(TIER_CONFIG) <span class="k">do</span>
+    currentCount += data.Weight
+    <span class="k">if</span> randomNum &lt;= currentCount <span class="k">then return</span> tierName, data <span class="k">end</span>
+  <span class="k">end</span>
+<span class="k">end</span></pre></div>
+    </figure>
+
+    <figure>
+      <figcaption>
+        <strong>8. Satu pola pertumbuhan dipakai ulang untuk beehive dan berry bush.</strong>
         Konfigurasi (waktu tunggu, kenaikan berat, ukuran) dipisah dari logikanya,
         supaya resource baru cukup menyalin konfigurasi tanpa menulis loop baru.
       </figcaption>
@@ -297,7 +403,7 @@
 
     <figure>
       <figcaption>
-        <strong>6. Tangkapan langka jadi momen bersama, bukan cuma milik satu pemain.</strong>
+        <strong>9. Tangkapan langka jadi momen bersama, bukan cuma milik satu pemain.</strong>
         Notifikasi Secret disiarkan ke seluruh server, memperkuat sisi sosial
         dari game — pemain lain ikut senang (atau iri) melihat tangkapan besar.
       </figcaption>
@@ -313,13 +419,13 @@
   <section>
     <h2>Yang saya pelajari</h2>
     <p>
-      Membangun beberapa loop gameplay sekaligus (memancing, berkebun, gacha,
-      progresi) mengajarkan pentingnya <strong>pola yang bisa dipakai ulang</strong>
-      antar sistem yang terlihat berbeda tapi sebenarnya punya bentuk serupa —
-      beehive dan berry bush ternyata cukup satu pola pertumbuhan, bukan dua
-      sistem terpisah. Weighted random dengan pity di sini juga langsung
-      terasa familiar karena pola yang sama saya pakai di project Arcade Wheel,
-      cuma konteksnya beda.
+      Membangun beberapa loop gameplay sekaligus (memancing, berkebun, memasak,
+      menambang, gacha, progresi) mengajarkan pentingnya <strong>pola yang bisa
+      dipakai ulang</strong> antar sistem yang terlihat berbeda tapi sebenarnya
+      punya bentuk serupa — beehive dan berry bush cukup satu pola pertumbuhan,
+      dan weighted-random yang sama dipakai ulang di rarity ikan, tier mineral,
+      maupun gacha aura. Pola itu juga langsung terasa familiar karena saya
+      pakai konsep serupa di project Arcade Wheel, cuma konteksnya beda.
     </p>
     <p>
       Bekerja berdua secara remote juga mengajarkan pentingnya memisahkan
