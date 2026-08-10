@@ -1,0 +1,277 @@
+<!doctype html>
+<html lang="id">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>BLAST ID — Company Profile Website</title>
+  <meta name="description" content="Studi kasus: website company profile dwibahasa untuk BLAST ID, event organizer & brand activation.">
+  <link rel="stylesheet" href="../Assets/style.css">
+</head>
+<body>
+
+<div class="wrap">
+
+  <a class="backlink" href="../index.html">&larr; Semua project</a>
+
+  <header class="lede">
+    <div class="eyebrow">BLAST ID Event Organizer · Company Profile Website</div>
+    <h1>Website company profile dwibahasa untuk event organizer</h1>
+    <p class="standfirst">
+      Landing page satu halaman untuk BLAST ID — event organizer &amp; brand
+      activation — menampilkan profil perusahaan, portofolio proyek, daftar
+      partner, dan kontak langsung, tersedia dalam Bahasa Indonesia dan Inggris.
+    </p>
+  </header>
+
+  <dl class="facts">
+    <dt>Peran</dt>
+    <dd>Full-stack — desain UI, arsitektur konten, i18n, deployment</dd>
+    <dt>Jenis</dt>
+    <dd>Website company profile untuk klien event organizer</dd>
+    <dt>Status</dt>
+    <dd>Live — <a href="https://www.blastpromotion.com" target="_blank" rel="noopener">blastpromotion.com</a></dd>
+    <dt>Kode</dt>
+    <dd>Repositori privat — <a href="https://github.com/siKic0l/blastid-companyprofile-showcase" target="_blank" rel="noopener">showcase publik ada di sini</a></dd>
+  </dl>
+
+  <section>
+    <h2>Masalah</h2>
+    <p>
+      BLAST ID melayani klien dari brand nasional (Djarum, Yamaha) sampai bank
+      daerah, tapi belum punya kehadiran digital yang mencerminkan skala kerja
+      mereka — portofolio event tersebar di media sosial, dan calon klien tidak
+      punya satu tempat untuk melihat rekam jejak perusahaan sebelum menghubungi.
+      Tiga kebutuhan utamanya:
+    </p>
+    <ul>
+      <li>
+        <strong>Harus dwibahasa dari awal.</strong> Klien korporat dan brand
+        internasional perlu versi Inggris yang setara kualitasnya dengan versi
+        Indonesia, bukan terjemahan tempelan.
+      </li>
+      <li>
+        <strong>Konten akan diisi bertahap.</strong> Foto proyek, logo partner,
+        dan statistik perusahaan belum semua siap saat development dimulai —
+        situsnya harus tetap terlihat rapi sebelum semua aset final masuk.
+      </li>
+      <li>
+        <strong>Portofolio proyek harus terasa meyakinkan.</strong> Event
+        seperti roadshow dan konser musik perlu ditampilkan dengan detail
+        (klien, lokasi, cakupan kerja), bukan cuma galeri foto polos.
+      </li>
+    </ul>
+  </section>
+
+  <section>
+    <h2>Pendekatan</h2>
+    <p>
+      Seluruh konten teks dipisah total dari komponen lewat sistem
+      <strong>tipe bersama</strong> (<code>content/types.ts</code>): file
+      <code>id.ts</code> dan <code>en.ts</code> sama-sama harus memenuhi tipe
+      <code>Content</code> yang identik. Kalau satu bahasa ketinggalan
+      menambahkan field baru, build TypeScript-nya gagal — bukan diam-diam
+      lolos dan ketahuan setelah live. Routing bahasa memakai segmen
+      <code>app/[locale]/</code> supaya <code>&lt;html lang&gt;</code> selalu
+      benar dan <code>/id</code> &amp; <code>/en</code> masing-masing punya
+      URL yang bisa di-index mesin pencari.
+    </p>
+    <p>
+      Untuk masalah aset yang belum lengkap, dipakai komponen
+      <code>ImageSlot</code> yang menghitung rasio placeholder sama persis
+      dengan foto aslinya. Selama field foto di konten masih <code>null</code>,
+      yang tampil adalah placeholder bergaris dengan dimensi identik — begitu
+      foto asli dipasang, tidak ada <em>layout shift</em> sama sekali.
+    </p>
+    <p>
+      Palet warna diambil langsung dari elemen logo (kuning petir, merah
+      outline, hitam wordmark) dan didefinisikan sekali sebagai CSS custom
+      property di satu tempat — komponen hanya memakai utility class, tidak
+      ada warna yang di-hardcode berulang di banyak file.
+    </p>
+  </section>
+
+  <section>
+    <h2>Fitur</h2>
+    <div class="features">
+      <div class="feature">
+        <h3>Dwibahasa (ID/EN)</h3>
+        <p>Toggle bahasa dengan URL terpisah per locale, dijaga konsisten oleh TypeScript, bukan konvensi manual.</p>
+      </div>
+      <div class="feature">
+        <h3>Portofolio proyek interaktif</h3>
+        <p>Detail proyek (klien, tahun, lokasi, cakupan kerja) dengan carousel foto dan modal detail per proyek.</p>
+      </div>
+      <div class="feature">
+        <h3>Statistik dengan count-up animation</h3>
+        <p>Angka statistik perusahaan menghitung naik secara halus saat pertama masuk viewport, sekali saja.</p>
+      </div>
+      <div class="feature">
+        <h3>Placeholder tanpa layout shift</h3>
+        <p>Slot foto & logo partner yang belum terisi tetap menjaga rasio dan ukuran asli, jadi tidak ada elemen "meloncat" saat aset dipasang.</p>
+      </div>
+      <div class="feature">
+        <h3>Scroll reveal yang aksesibel</h3>
+        <p>Animasi masuk saat discroll otomatis dinonaktifkan untuk pengguna dengan preferensi prefers-reduced-motion.</p>
+      </div>
+      <div class="feature">
+        <h3>Kontak langsung ke WhatsApp</h3>
+        <p>Tombol kontak membuka WhatsApp dengan pesan pembuka yang sudah terisi otomatis.</p>
+      </div>
+      <div class="feature">
+        <h3>Daftar partner &amp; klien</h3>
+        <p>Menampilkan logo brand yang pernah bekerja sama, dari brand nasional sampai institusi finansial.</p>
+      </div>
+      <div class="feature">
+        <h3>SEO per-bahasa</h3>
+        <p>Metadata (title, description, keywords) terpisah untuk tiap locale, bukan satu metadata generik untuk semua bahasa.</p>
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <h2>Tampilan</h2>
+    <div class="shot">Sisipkan tangkapan layar hero section di sini</div>
+    <div class="shot">Sisipkan tangkapan layar portofolio proyek di sini</div>
+    <div class="shot">Sisipkan tangkapan layar partner &amp; kontak di sini</div>
+  </section>
+
+  <section>
+    <h2>Teknologi</h2>
+    <div class="stack">
+      <span class="chip">Next.js 16 (App Router)</span>
+      <span class="chip">React 19</span>
+      <span class="chip">TypeScript</span>
+      <span class="chip">Tailwind CSS v4</span>
+      <span class="chip">Motion</span>
+      <span class="chip">Vercel</span>
+    </div>
+    <p>
+      Routing locale memakai konvensi <code>proxy.ts</code> — pengganti
+      <code>middleware.ts</code> yang sudah deprecated di Next.js 16 — untuk
+      mengarahkan <code>/</code> ke locale default tanpa pernah membiarkan
+      pengunjung mendarat di URL tanpa bahasa.
+    </p>
+  </section>
+
+  <section>
+    <h2>Beberapa keputusan teknis</h2>
+
+    <figure>
+      <figcaption>
+        <strong>1. Konten dua bahasa dijaga tetap sinkron oleh compiler, bukan disiplin manual.</strong>
+        Satu tipe <code>Content</code> dipakai bersama oleh <code>id.ts</code>
+        dan <code>en.ts</code> — field baru yang cuma ditambah di satu bahasa
+        akan membuat build gagal, jadi ketidaksesuaian ketahuan sebelum deploy,
+        bukan setelah pengunjung Inggris menemukan halaman kosong.
+      </figcaption>
+      <div class="code"><pre><span class="k">export type</span> Content = {
+  hero: {
+    eyebrow: <span class="k">string</span>;
+    titleLead: <span class="k">string</span>;
+    <span class="c">// ...</span>
+  };
+  <span class="c">// ...seluruh struktur konten situs</span>
+};
+
+<span class="c">// content/id.ts dan content/en.ts SAMA-SAMA harus:</span>
+<span class="k">export const</span> id: Content = { <span class="c">/* ... */</span> };
+<span class="k">export const</span> en: Content = { <span class="c">/* ... */</span> }; <span class="c">// tipe berbeda = TypeScript error</span></pre></div>
+    </figure>
+
+    <figure>
+      <figcaption>
+        <strong>2. Placeholder foto menghitung rasio yang sama persis dengan aslinya.</strong>
+        Selama aset dari klien belum siap, slot foto tetap menjaga dimensi
+        final — sehingga saat foto asli dipasang nanti, tidak ada konten lain
+        di halaman yang bergeser posisinya.
+      </figcaption>
+      <div class="code"><pre><span class="k">if</span> (src) {
+  <span class="k">return</span> &lt;Image src={src} alt={alt} fill sizes={sizes} className=<span class="k">"object-cover"</span> /&gt;;
+}
+
+<span class="c">// src masih null: placeholder dengan pola garis diagonal,</span>
+<span class="c">// mengisi ruang yang PERSIS sama dengan ukuran foto final</span>
+<span class="k">return</span> (
+  &lt;div className={cn(<span class="k">"bg-overlay relative flex items-center justify-center"</span>, className)}&gt;
+    &lt;span&gt;{label ?? <span class="k">"Foto menyusul"</span>}&lt;/span&gt;
+  &lt;/div&gt;
+);</pre></div>
+    </figure>
+
+    <figure>
+      <figcaption>
+        <strong>3. Animasi menghormati preferensi aksesibilitas pengguna.</strong>
+        Komponen <code>Reveal</code> yang dipakai di seluruh halaman otomatis
+        melewati animasi kalau pengguna mengaktifkan <code>prefers-reduced-motion</code>
+        di sistem operasinya — bukan cuma mempercepat animasinya, tapi benar-benar meniadakannya.
+      </figcaption>
+      <div class="code"><pre><span class="k">const</span> reduced = useReducedMotion();
+
+<span class="k">if</span> (reduced) {
+  <span class="k">const</span> Plain = as;
+  <span class="k">return</span> &lt;Plain className={className}&gt;{children}&lt;/Plain&gt;; <span class="c">// tanpa animasi sama sekali</span>
+}
+
+<span class="k">return</span> (
+  &lt;Component initial={{ opacity: 0, y: 24 }} whileInView={{ opacity: 1, y: 0 }}
+    viewport={{ once: <span class="k">true</span>, margin: <span class="k">"-80px"</span> }}
+    transition={{ duration: 0.6, delay, ease: [0.22, 1, 0.36, 1] }}&gt;
+    {children}
+  &lt;/Component&gt;
+);</pre></div>
+    </figure>
+
+    <figure>
+      <figcaption>
+        <strong>4. Angka statistik menghitung naik sekali, dengan easing yang terasa natural.</strong>
+        <code>useInView</code> memastikan animasi hanya berjalan sekali saat
+        elemen pertama masuk layar, dengan kurva ease-out supaya kenaikannya
+        cepat di awal dan melambat mendekati angka akhir.
+      </figcaption>
+      <div class="code"><pre><span class="k">const</span> inView = useInView(ref, { once: <span class="k">true</span>, margin: <span class="k">"-60px"</span> });
+
+<span class="k">const</span> tick = (now) =&gt; {
+  <span class="k">const</span> elapsed = now - start;
+  <span class="k">const</span> progress = Math.min(elapsed / duration, 1);
+  <span class="c">// ease-out kubik: cepat di awal, melambat di akhir</span>
+  setDisplay(Math.round(value * (1 - Math.pow(1 - progress, 3))));
+  <span class="k">if</span> (progress &lt; 1) frame = requestAnimationFrame(tick);
+};</pre></div>
+    </figure>
+  </section>
+
+  <section>
+    <h2>Yang saya pelajari</h2>
+    <p>
+      Project ini melatih cara membangun untuk konten yang belum lengkap
+      tanpa membuat situsnya terlihat "kosong" — <code>ImageSlot</code> dan
+      status <em>"masih placeholder"</em> di README bukan cuma catatan
+      sementara, tapi keputusan desain: situs harus tetap presentable di
+      setiap tahap pengisian konten, bukan menunggu semua aset final baru
+      layak ditunjukkan ke klien.
+    </p>
+    <p>
+      Pelajaran lain: memaksa konsistensi lewat tipe (seperti
+      <code>Content</code> yang dipakai bersama <code>id.ts</code>/<code>en.ts</code>)
+      jauh lebih dapat diandalkan dibanding sekadar mengingat untuk selalu
+      update dua file bersamaan — terutama untuk project yang isinya akan
+      terus di-update setelah saya selesai kerjakan.
+    </p>
+  </section>
+
+  <div class="note">
+    <p>
+      <strong>Catatan soal akses kode.</strong> Repositori bersifat publik —
+      seluruh kode di halaman ini bisa dilihat langsung di GitHub.
+    </p>
+  </div>
+
+  <footer>
+    <p><a href="../index.html">&larr; Semua project</a></p>
+    <p>Nurrohmi Zaki — nurrohmi.zaki@gmail.com — <a href="https://www.linkedin.com/in/nurrohmi-zaki-78b447294/" target="_blank" rel="noopener">LinkedIn</a></p>
+  </footer>
+
+</div>
+
+</body>
+</html>

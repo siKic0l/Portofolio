@@ -1,7 +1,13 @@
 {
   "permissions": {
+    "allow": [
+      "Bash(cp \"d:/#GWEH/Porto/Assets/roblox/\"*.png \"D:/#GWEH/kiminolandly-showcase/screenshots/\" *)"
+    ],
     "additionalDirectories": [
-      "D:\\#GWEH\\aikooarts-showcase"
+      "D:\\#GWEH\\aikooarts-showcase",
+      "D:\\#GWEH\\kiminolandly-showcase\\src\\gacha",
+      "d:\\#GWEH\\Porto\\Assets\\roblox",
+      "D:\\#GWEH\\kiminolandly-showcase"
     ]
   }
 }
