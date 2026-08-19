@@ -53,6 +53,23 @@
     font-size:0.9rem;transition:opacity .2s;
   }
   .btn:hover{opacity:0.85;}
+  /* Tombol menu, hanya tampil di layar kecil */
+  .nav-toggle{
+    display:none;
+    background:transparent;
+    border:1px solid var(--border);
+    color:var(--text);
+    border-radius:6px;
+    width:40px;height:38px;
+    cursor:pointer;
+    align-items:center;justify-content:center;
+    transition:border-color .2s;
+  }
+  .nav-toggle:hover{border-color:var(--accent);}
+  .nav-toggle svg{width:20px;height:20px;display:block;}
+  .nav-toggle .icon-close{display:none;}
+  .nav-toggle[aria-expanded="true"] .icon-open{display:none;}
+  .nav-toggle[aria-expanded="true"] .icon-close{display:block;}
 
   /* Hero / About Me */
   #about .container{
@@ -162,16 +179,110 @@
     border-top:1px solid var(--border);
   }
 
+  /* Contact modal */
+  #contact-modal{
+    /* Mengambang tepat di tengah layar, horizontal dan vertikal */
+    position:fixed;
+    inset:0;
+    margin:auto;
+    border:1px solid var(--border);
+    background:var(--card);
+    color:var(--text);
+    border-radius:14px;
+    padding:0;
+    width:min(420px,calc(100vw - 40px));
+    max-height:calc(100vh - 40px);
+    overflow:auto;
+    box-shadow:0 24px 64px rgba(0,0,0,0.55);
+  }
+  #contact-modal::backdrop{
+    background:rgba(0,0,0,0.65);
+  }
+  #contact-modal[open]{animation:modalIn .18s ease-out;}
+  #contact-modal[open]::backdrop{animation:backdropIn .18s ease-out;}
+  @keyframes modalIn{
+    from{opacity:0;transform:translateY(10px) scale(0.97);}
+    to{opacity:1;transform:translateY(0) scale(1);}
+  }
+  @keyframes backdropIn{
+    from{opacity:0;}
+    to{opacity:1;}
+  }
+  @media (prefers-reduced-motion:reduce){
+    #contact-modal[open],
+    #contact-modal[open]::backdrop{animation:none;}
+  }
+  .modal-head{
+    display:flex;align-items:center;justify-content:space-between;
+    padding:22px 24px 14px;
+  }
+  .modal-head h3{font-size:1.15rem;}
+  .modal-close{
+    background:transparent;border:none;color:var(--muted);
+    font-size:1.5rem;line-height:1;cursor:pointer;
+    padding:2px 8px;border-radius:6px;transition:all .2s;
+  }
+  .modal-close:hover{color:var(--text);background:var(--bg-alt);}
+  .modal-body{
+    padding:0 24px 24px;
+    display:flex;flex-direction:column;gap:12px;
+  }
+  .contact-option{
+    display:flex;align-items:center;gap:14px;
+    background:var(--bg-alt);
+    border:1px solid var(--border);
+    border-radius:10px;
+    padding:14px 16px;
+    transition:border-color .2s,background .2s;
+  }
+  .contact-option:hover{border-color:var(--accent);background:#2b2b2b;}
+  .contact-option svg{
+    width:22px;height:22px;flex-shrink:0;color:var(--accent);
+  }
+  .contact-option .label{font-weight:600;font-size:0.98rem;display:block;}
+  .contact-option .sub{color:var(--muted);font-size:0.85rem;display:block;}
+
   @media (max-width:768px){
-    .nav-links{display:none;}
+    nav{position:relative;gap:12px;}
+    .nav-toggle{display:flex;}
+    nav .btn{margin-left:auto;}
+    /* Menu jadi panel yang turun dari bawah header */
+    .nav-links{
+      display:none;
+      position:absolute;
+      top:100%;
+      left:0;right:0;
+      flex-direction:column;
+      gap:0;
+      background:var(--bg);
+      border-top:1px solid var(--border);
+      border-bottom:1px solid var(--border);
+      padding:6px 0;
+    }
+    .nav-links.open{display:flex;}
+    .nav-links li{width:100%;}
+    .nav-links a{
+      display:block;
+      padding:13px 24px;
+      font-size:1rem;
+    }
+    .nav-links a:hover{background:var(--bg-alt);color:var(--text);}
     .about-text h1{font-size:2.1rem;}
-    #about .container{padding-top:50px;padding-bottom:50px;gap:28px;}
+    /* Judul section dikecilkan agar tidak melampaui judul halaman detail */
+    h2{font-size:1.7rem;}
+    /* Jarak vertikal dirapatkan agar isi tidak terdorong jauh ke bawah */
+    section{padding:56px 0;}
+    #about .container{padding-top:20px;padding-bottom:36px;gap:28px;}
+    .subtitle{margin-bottom:32px;}
+    .services-grid{margin-top:32px;}
+    .filters{margin-bottom:28px;}
   }
 
   @media (max-width:360px){
     .avatar{width:100%;max-width:240px;height:auto;aspect-ratio:1/1;}
     .container{padding:0 16px;}
     .about-text h1{font-size:1.8rem;}
+    h2{font-size:1.5rem;}
   }
 </style>
 </head>
@@ -180,14 +291,22 @@
 <header>
   <nav>
     <div class="logo">NURROHMI<span class="accent">ZAKI</span></div>
-    <ul class="nav-links">
+    <ul class="nav-links" id="nav-links">
       <li><a href="#about">About</a></li>
       <li><a href="#skills">Skills</a></li>
       <li><a href="#portfolio">Portfolio</a></li>
       <li><a href="#education">Education</a></li>
       <li><a href="#experience">Experience</a></li>
     </ul>
-    <button class="btn">Contact Me</button>
+    <button class="btn" data-open-contact>Contact Me</button>
+    <button class="nav-toggle" aria-label="Buka menu" aria-controls="nav-links" aria-expanded="false">
+      <svg class="icon-open" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true">
+        <path d="M3 6h18M3 12h18M3 18h18"/>
+      </svg>
+      <svg class="icon-close" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true">
+        <path d="M5 5l14 14M19 5L5 19"/>
+      </svg>
+    </button>
   </nav>
 </header>
 
@@ -196,8 +315,8 @@
   <div class="container">
     <div class="about-text">
       <p class="greet">Hi, I am</p>
-      <h1>Nurrohmi Zaki<br><span class="accent">Full-Stack</span> Developer and QA Enthusiast</h1>
-      <p>Fresh graduate in Informatics with hands-on experience in full-stack web development and custom software engineering — from company profile websites to warehouse management systems and desktop arcade software tailored to real business workflows. Currently deepening my knowledge in Quality Assurance to build software that's not just functional, but reliably tested.</p>
+      <h1>Nurrohmi Zaki<br><span class="accent">Software</span> Engineer — Full-Stack Development &amp; <span class="accent">Quality Assurance</span></h1>
+      <p>Fresh graduate in Informatics with hands-on experience in full-stack web development and custom software engineering — from company profile websites to warehouse management systems and desktop arcade software tailored to real business workflows. I now apply that same engineering discipline to Quality Assurance — two documented testing projects covering a REST API and a web-based HRMS, with 221 test cases, 11 defect reports, and test execution managed in Qase.io.</p>
       <button class="btn" onclick="location.href='mailto:nurrohmi.zaki@gmail.com'">Hire Me</button>
       <div class="socials">
         <a href="https://www.linkedin.com/in/nurrohmi-zaki-78b447294/" target="_blank" rel="noopener">In</a>
@@ -240,7 +359,7 @@
       <div class="service-card">
         <div class="service-icon">◨</div>
         <h3>Quality Assurance</h3>
-        <p>Functional testing, debugging, and performance optimization to ensure stable, reliable releases.</p>
+        <p>Test case design, manual API and web application testing, defect reporting, and test execution management using Postman and Qase.io.</p>
       </div>
     </div>
   </div>
@@ -362,6 +481,34 @@
   &copy; 2026 <span class="accent">Nurrohmi Zaki</span>. All Rights Reserved.
 </footer>
 
+<!-- CONTACT MODAL -->
+<dialog id="contact-modal" aria-labelledby="contact-modal-title">
+  <div class="modal-head">
+    <h3 id="contact-modal-title">Contact me</h3>
+    <button class="modal-close" aria-label="Tutup">&times;</button>
+  </div>
+  <div class="modal-body">
+    <a class="contact-option" href="mailto:nurrohmi.zaki@gmail.com">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+        <rect x="2" y="4" width="20" height="16" rx="2"/><path d="m2 7 10 6 10-6"/>
+      </svg>
+      <span>
+        <span class="label">Email</span>
+        <span class="sub">nurrohmi.zaki@gmail.com</span>
+      </span>
+    </a>
+    <a class="contact-option" href="https://wa.me/6289503929435" target="_blank" rel="noopener">
+      <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+        <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51a12.8 12.8 0 0 0-.57-.01c-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.872.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 0 1-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 0 1-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884a9.82 9.82 0 0 1 6.988 2.896 9.825 9.825 0 0 1 2.893 6.994c-.003 5.45-4.437 9.885-9.885 9.885M20.52 3.449C18.24 1.245 15.24 0 12.045 0 5.463 0 .104 5.359.101 11.945c0 2.096.549 4.142 1.595 5.945L0 24l6.305-1.654a11.94 11.94 0 0 0 5.71 1.454h.005c6.585 0 11.946-5.36 11.949-11.945a11.87 11.87 0 0 0-3.45-8.406"/>
+      </svg>
+      <span>
+        <span class="label">WhatsApp</span>
+        <span class="sub">Chat</span>
+      </span>
+    </a>
+  </div>
+</dialog>
+
 <script>
   const filterBtns = document.querySelectorAll('.filter-btn');
   const cards = document.querySelectorAll('.project-card');
@@ -374,6 +521,46 @@
         c.style.display = (f==='all' || c.dataset.cat===f) ? '' : 'none';
       });
     });
+  });
+
+  // Menu mobile
+  const navToggle = document.querySelector('.nav-toggle');
+  const navLinks  = document.getElementById('nav-links');
+  const setMenu = open=>{
+    navLinks.classList.toggle('open',open);
+    navToggle.setAttribute('aria-expanded',open);
+    navToggle.setAttribute('aria-label',open ? 'Tutup menu' : 'Buka menu');
+  };
+  navToggle.addEventListener('click',()=>{
+    setMenu(!navLinks.classList.contains('open'));
+  });
+  // Memilih salah satu tautan langsung menutup menu
+  navLinks.querySelectorAll('a').forEach(a=>{
+    a.addEventListener('click',()=>setMenu(false));
+  });
+  // Klik di luar navbar menutup menu
+  document.addEventListener('click',e=>{
+    if(!navLinks.contains(e.target) && !navToggle.contains(e.target)) setMenu(false);
+  });
+  // Esc menutup menu
+  document.addEventListener('keydown',e=>{
+    if(e.key==='Escape') setMenu(false);
+  });
+
+  // Contact modal
+  const contactModal = document.getElementById('contact-modal');
+  document.querySelectorAll('[data-open-contact]').forEach(btn=>{
+    btn.addEventListener('click',()=>contactModal.showModal());
+  });
+  contactModal.querySelector('.modal-close')
+    .addEventListener('click',()=>contactModal.close());
+  // Klik di area gelap di luar kotak menutup modal
+  contactModal.addEventListener('click',e=>{
+    if(e.target===contactModal) contactModal.close();
+  });
+  // Menutup modal setelah salah satu opsi dipilih
+  contactModal.querySelectorAll('.contact-option').forEach(opt=>{
+    opt.addEventListener('click',()=>contactModal.close());
   });
 </script>
 
