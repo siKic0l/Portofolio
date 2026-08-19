@@ -1,0 +1,265 @@
+<!doctype html>
+<html lang="id">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>API Testing — Restful Booker API</title>
+  <meta name="description" content="Studi kasus QA: pengujian manual 97 test case pada Restful Booker API memakai Postman dan Qase, menghasilkan 10 laporan bug.">
+  <link rel="stylesheet" href="../Assets/style.css">
+</head>
+<body>
+
+<div class="wrap">
+
+  <a class="backlink" href="../index.html">&larr; Semua project</a>
+
+  <header class="lede">
+    <div class="eyebrow">Proyek Mandiri · Manual API Testing</div>
+    <h1>Menguji Restful Booker API dengan alur kerja QA profesional</h1>
+    <p class="standfirst">
+      Proyek latihan yang sengaja dikerjakan memakai siklus lengkap STLC — analisis API,
+      strategi uji, desain test case, eksekusi, sampai pelaporan defect — bukan sekadar
+      menembak endpoint di Postman. Hasilnya 97 test case, 91,75% pass, dan 10 laporan bug.
+    </p>
+  </header>
+
+  <dl class="facts">
+    <dt>Peran</dt>
+    <dd>QA Engineer — analisis, desain test case, eksekusi, pelaporan defect</dd>
+    <dt>Aplikasi diuji</dt>
+    <dd>Restful Booker API (public demo, <code>restful-booker.herokuapp.com</code>)</dd>
+    <dt>Tools</dt>
+    <dd>Postman, Qase.io, Markdown, GitHub</dd>
+    <dt>Eksekusi</dt>
+    <dd>97 test case · 7 suite · selesai 13 Agustus 2026</dd>
+    <dt>Kode</dt>
+    <dd><a href="https://github.com/siKic0l/API-testing-portofolio" target="_blank" rel="noopener">Repositori publik di GitHub</a></dd>
+  </dl>
+
+  <section>
+    <h2>Kenapa proyek ini ada</h2>
+    <p>
+      Banyak portofolio API testing berhenti di satu koleksi Postman berisi request yang
+      berhasil. Masalahnya, itu tidak menunjukkan hal yang sebenarnya dikerjakan seorang QA:
+      memutuskan <strong>apa yang perlu diuji</strong>, kenapa, dan apa artinya ketika hasilnya
+      tidak sesuai harapan.
+    </p>
+    <p>
+      Jadi proyek ini saya kerjakan dengan urutan yang sama seperti di tim beneran — dokumen
+      strategi dan test case ditulis <em>sebelum</em> request pertama dikirim, hasil eksekusi
+      dicatat di test management tool, dan setiap temuan diangkat jadi laporan bug terstruktur
+      dengan langkah reproduksi dan bukti.
+    </p>
+  </section>
+
+  <section>
+    <h2>Cakupan pengujian</h2>
+    <p>
+      Delapan endpoint, dikelompokkan jadi tujuh suite. Prioritas ditentukan di awal:
+      autentikasi dan operasi tulis (create, update, delete) masuk kategori kritis,
+      health check paling rendah.
+    </p>
+    <div class="tablewrap">
+      <table>
+        <thead>
+          <tr><th>Suite</th><th>Endpoint</th><th>Test case</th></tr>
+        </thead>
+        <tbody>
+          <tr><td>Authentication</td><td><code>POST /auth</code></td><td>15</td></tr>
+          <tr><td>Create Booking</td><td><code>POST /booking</code></td><td>22</td></tr>
+          <tr><td>Get Booking</td><td><code>GET /booking</code>, <code>GET /booking/{id}</code></td><td>12</td></tr>
+          <tr><td>Update Booking</td><td><code>PUT /booking/{id}</code></td><td>18</td></tr>
+          <tr><td>Partial Update Booking</td><td><code>PATCH /booking/{id}</code></td><td>15</td></tr>
+          <tr><td>Delete Booking</td><td><code>DELETE /booking/{id}</code></td><td>10</td></tr>
+          <tr><td>Health Check</td><td><code>GET /ping</code></td><td>5</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <p>
+      Di luar cakupan, dan ditulis eksplisit di dokumen strategi supaya tidak ada asumsi
+      menggantung: UI testing, load dan stress testing, penetration testing, verifikasi
+      database, dan review source code.
+    </p>
+  </section>
+
+  <section>
+    <h2>Teknik desain test case</h2>
+    <p>
+      Test case tidak disusun dengan menebak-nebak, tapi memakai teknik black box standar
+      supaya cakupannya bisa dipertanggungjawabkan dan tidak banyak yang tumpang tindih.
+    </p>
+    <div class="features">
+      <div class="feature">
+        <h3>Positive testing</h3>
+        <p>Request valid harus menghasilkan respons sukses — token terbit, booking tersimpan, data kembali utuh.</p>
+      </div>
+      <div class="feature">
+        <h3>Negative testing</h3>
+        <p>Kredensial salah, field wajib hilang, JSON rusak, ID tidak ada, akses tanpa token.</p>
+      </div>
+      <div class="feature">
+        <h3>Boundary value analysis</h3>
+        <p>String kosong, angka sangat besar, batas minimum dan maksimum karakter.</p>
+      </div>
+      <div class="feature">
+        <h3>Equivalence partitioning</h3>
+        <p>Input dikelompokkan agar tidak menulis puluhan test case yang menguji hal yang sama.</p>
+      </div>
+      <div class="feature">
+        <h3>Error guessing</h3>
+        <p>Menebak titik rawan berdasarkan pola kegagalan yang umum — <code>null</code>, tipe data tertukar, header salah.</p>
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <h2>Hasil eksekusi</h2>
+    <p>
+      Eksekusi dicatat di Qase.io. Angka di bawah memakai hasil terakhir per test case unik —
+      eksekusi ulang dihitung sebagai riwayat, bukan test case tambahan.
+    </p>
+    <div class="tablewrap">
+      <table>
+        <thead>
+          <tr><th>Suite</th><th>Total</th><th>Pass</th><th>Fail</th><th>Blocked</th><th>Pass rate</th></tr>
+        </thead>
+        <tbody>
+          <tr><td>Authentication</td><td>15</td><td>15</td><td>0</td><td>0</td><td>100%</td></tr>
+          <tr><td>Create Booking</td><td>22</td><td>16</td><td>6</td><td>0</td><td>72,73%</td></tr>
+          <tr><td>Get Booking</td><td>12</td><td>12</td><td>0</td><td>0</td><td>100%</td></tr>
+          <tr><td>Update Booking</td><td>18</td><td>18</td><td>0</td><td>0</td><td>100%</td></tr>
+          <tr><td>Partial Update Booking</td><td>15</td><td>13</td><td>0</td><td>2</td><td>86,67%</td></tr>
+          <tr><td>Delete Booking</td><td>10</td><td>10</td><td>0</td><td>0</td><td>100%</td></tr>
+          <tr><td>Health Check</td><td>5</td><td>5</td><td>0</td><td>0</td><td>100%</td></tr>
+          <tr><td><strong>Total</strong></td><td><strong>97</strong></td><td><strong>89</strong></td><td><strong>6</strong></td><td><strong>2</strong></td><td><strong>91,75%</strong></td></tr>
+        </tbody>
+      </table>
+    </div>
+    <p>
+      Seluruh kegagalan terkonsentrasi di satu modul: <strong>Create Booking</strong>.
+      Konsentrasi seperti ini justru informatif — menunjukkan validasi input di jalur
+      pembuatan data adalah titik terlemah, bukan masalah yang tersebar merata.
+    </p>
+  </section>
+
+  <section>
+    <h2>Temuan utama</h2>
+    <p>
+      Sepuluh laporan bug ditulis lengkap dengan langkah reproduksi, request body, hasil
+      yang diharapkan versus hasil aktual, dampak, dan usulan perbaikan. Tiga yang paling
+      berbobot:
+    </p>
+
+    <figure>
+      <figcaption>
+        <strong>1. Validasi field wajib gagal jadi error server.</strong>
+        Menghilangkan <code>firstname</code> dari request body membuat API menjawab
+        <code>500 Internal Server Error</code>, bukan <code>400 Bad Request</code>.
+        Dampaknya bukan sekadar kode status yang keliru: klien API jadi tidak bisa
+        membedakan mana kesalahan input dari sisi mereka dan mana kegagalan di sisi server —
+        sehingga tidak tahu apakah request layak diulang atau harus diperbaiki dulu.
+        Perilaku yang sama muncul pada <code>lastname</code> yang hilang, body <code>{}</code> kosong,
+        dan seluruh field bernilai <code>null</code>.
+      </figcaption>
+      <div class="shot filled"><img src="../Assets/qa-api/500-missing-firstname.png" alt="Postman menampilkan respons 500 Internal Server Error saat field firstname dihilangkan"></div>
+    </figure>
+
+    <figure>
+      <figcaption>
+        <strong>2. Body kosong pun tidak tertangkap validasi.</strong>
+        Mengirim <code>{}</code> ke <code>POST /booking</code> menghasilkan error server yang sama.
+        Ini memperkuat dugaan bahwa pengecekan field wajib berjalan setelah data terlanjur
+        diproses, bukan sebelumnya.
+      </figcaption>
+      <div class="shot filled"><img src="../Assets/qa-api/500-empty-body.png" alt="Postman menampilkan 500 Internal Server Error saat body request berupa JSON kosong"></div>
+    </figure>
+
+    <figure>
+      <figcaption>
+        <strong>3. Test lulus, tapi tetap ada bug.</strong>
+        Suite Update Booking mencatat pass rate 100% — semua request dijawab
+        <code>200 OK</code> persis seperti yang dinyatakan dokumentasi. Namun empat perilakunya
+        tetap saya angkat jadi laporan bug: <code>totalprice</code> menerima string <code>"abc"</code>,
+        menerima nilai negatif, <code>checkin</code> menerima format tanggal tidak valid, dan
+        tanggal <code>checkout</code> boleh lebih awal daripada <code>checkin</code>.
+        Statusnya lulus terhadap kontrak API, tapi melanggar aturan bisnis yang masuk akal
+        untuk sistem pemesanan hotel.
+      </figcaption>
+      <div class="shot filled"><img src="../Assets/qa-api/totalprice-string.png" alt="Postman menampilkan API menerima nilai string pada field totalprice"></div>
+    </figure>
+  </section>
+
+  <section>
+    <h2>Dua test yang diblokir</h2>
+    <p>
+      Dua test case di modul Partial Update tidak bisa dieksekusi dan dicatat sebagai
+      <strong>Blocked</strong>, bukan dipaksa jadi Pass atau Fail. Membedakan ketiganya penting:
+      Fail berarti sistem berperilaku salah, Blocked berarti pengujiannya sendiri belum bisa
+      dijalankan — dan keduanya menuntut tindak lanjut yang berbeda.
+    </p>
+    <div class="shot filled"><img src="../Assets/qa-api/patch-blocked.png" alt="Bukti eksekusi test case Partial Update yang berstatus Blocked"></div>
+  </section>
+
+  <section>
+    <h2>Yang saya pelajari</h2>
+    <p>
+      Pelajaran terbesarnya datang dari modul Update Booking. Awalnya saya menganggap
+      pekerjaan selesai begitu semua test case berstatus lulus — angka 100% terasa seperti
+      garis akhir. Padahal test case saya sendiri yang menetapkan ekspektasinya:
+      saya menulis &ldquo;harapkan <code>200 OK</code>&rdquo; karena itu yang dijanjikan dokumentasi,
+      lalu API memenuhinya, lalu semuanya hijau.
+    </p>
+    <p>
+      Yang saya lewatkan adalah bertanya apakah <code>200 OK</code> itu <em>pantas</em>.
+      Sebuah sistem pemesanan yang menerima tanggal checkout mendahului checkin jelas keliru,
+      seberapa pun konsistennya dia dengan dokumentasi sendiri. Dari situ empat laporan bug
+      di modul itu lahir — bukan dari test yang gagal, tapi dari membaca ulang hasil yang lulus.
+    </p>
+    <p>
+      Kesimpulan yang saya bawa: <strong>test suite hijau hanya membuktikan sistem sesuai
+      dengan ekspektasi yang saya tulis, bukan bahwa ekspektasi itu benar.</strong>
+      Menguji spesifikasinya sendiri adalah bagian dari pekerjaan.
+    </p>
+  </section>
+
+  <section>
+    <h2>Batasan dan tahap berikutnya</h2>
+    <p>
+      Proyek ini sejauh ini murni pengujian manual. Kerangka folder untuk otomasi sudah
+      disiapkan di repositori, tapi <strong>koleksi Postman dan eksekusi Newman-nya belum
+      diisi</strong> — jadi tidak saya klaim sebagai bagian dari hasil kerja. Yang selesai dan
+      bisa diperiksa adalah dokumentasi strategi, 97 test case, bukti eksekusi, manajemen tes
+      di Qase, dan sepuluh laporan bug.
+    </p>
+    <p>Rencana pengembangan berikutnya, sesuai urutan prioritas:</p>
+    <ul>
+      <li>Mengisi koleksi Postman dengan assertion <code>pm.test</code> untuk seluruh suite.</li>
+      <li>Menjalankan koleksi lewat Newman dan menyimpan laporan hasilnya di repositori.</li>
+      <li>Menyambungkan eksekusi otomatis ke GitHub Actions.</li>
+    </ul>
+  </section>
+
+  <div class="note">
+    <p>
+      <strong>Akses kode dan laporan.</strong> Seluruh dokumen, test case, bukti eksekusi,
+      dan laporan bug tersedia terbuka di
+      <a href="https://github.com/siKic0l/API-testing-portofolio" target="_blank" rel="noopener">repositori GitHub</a>.
+      Hasil eksekusi juga bisa dilihat langsung lewat
+      <a href="https://app.qase.io/public/report/debcf3c66ec50d7471d709188741133f6fefc744" target="_blank" rel="noopener">laporan publik Qase</a>.
+    </p>
+    <p>
+      Restful Booker adalah API demo publik yang memang disediakan untuk latihan pengujian.
+      Temuan di halaman ini adalah hasil observasi terhadap perilakunya, bukan laporan
+      terhadap sistem produksi milik pihak lain.
+    </p>
+  </div>
+
+  <footer>
+    <p><a href="../index.html">&larr; Semua project</a></p>
+    <p>Nurrohmi Zaki — nurrohmi.zaki@gmail.com — <a href="https://www.linkedin.com/in/nurrohmi-zaki-78b447294/" target="_blank" rel="noopener">LinkedIn</a></p>
+  </footer>
+
+</div>
+
+</body>
+</html>

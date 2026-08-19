@@ -1,0 +1,212 @@
+<!doctype html>
+<html lang="id">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Manual Testing — OrangeHRM Demo</title>
+  <meta name="description" content="Studi kasus QA: pengujian fungsional manual 124 test case pada aplikasi HRMS OrangeHRM, dikelola lewat Qase dengan bukti eksekusi lengkap.">
+  <link rel="stylesheet" href="../Assets/style.css">
+</head>
+<body>
+
+<div class="wrap">
+
+  <a class="backlink" href="../index.html">&larr; Semua project</a>
+
+  <header class="lede">
+    <div class="eyebrow">Proyek Mandiri · Manual Functional Testing</div>
+    <h1>Pengujian fungsional manual aplikasi HRMS OrangeHRM</h1>
+    <p class="standfirst">
+      Siklus pengujian penuh terhadap modul autentikasi dan administrasi sebuah sistem
+      manajemen SDM — dari analisis aplikasi, penyusunan 124 test case, eksekusi terdokumentasi
+      di Qase, sampai pelaporan defect. Setiap test case punya bukti tangkapan layarnya sendiri.
+    </p>
+  </header>
+
+  <dl class="facts">
+    <dt>Peran</dt>
+    <dd>QA Engineer — analisis aplikasi, desain dan eksekusi test case, pelaporan defect</dd>
+    <dt>Aplikasi diuji</dt>
+    <dd>OrangeHRM Demo (OrangeHRM OS 5.9) — sistem manajemen SDM berbasis web</dd>
+    <dt>Tools</dt>
+    <dd>Qase.io, Google Chrome, Windows 11, Markdown, GitHub</dd>
+    <dt>Eksekusi</dt>
+    <dd>124 test case · 4 modul · test run selesai 30 Juli 2026</dd>
+    <dt>Kode</dt>
+    <dd><a href="https://github.com/siKic0l/OrangeHRMdemo-Manual-Testing-Portofolio" target="_blank" rel="noopener">Repositori publik di GitHub</a></dd>
+  </dl>
+
+  <section>
+    <h2>Kenapa manual testing, dan kenapa HRMS</h2>
+    <p>
+      Otomasi bagus untuk mengulang hal yang sudah diketahui. Yang tidak bisa digantikannya
+      adalah tahap awal: memahami aplikasi asing, menebak di mana logikanya rapuh, dan
+      merumuskan apa arti &ldquo;benar&rdquo; untuk tiap fitur. Kemampuan itu yang saya latih di sini.
+    </p>
+    <p>
+      OrangeHRM dipilih karena bukan aplikasi contoh yang disederhanakan. Di dalamnya ada
+      form bertingkat, aturan hak akses berbasis peran, validasi duplikat, unggah berkas,
+      pencarian dengan banyak filter, dan pengurutan tabel — kumpulan perilaku yang
+      betul-betul menuntut test case dirancang, bukan sekadar diklik satu per satu.
+    </p>
+  </section>
+
+  <section>
+    <h2>Cakupan dan hasil</h2>
+    <p>
+      Empat modul diuji sampai tuntas. Jumlah bukti tangkapan layar sama persis dengan jumlah
+      test case di tiap modul — tidak ada test case yang statusnya diisi tanpa bukti.
+    </p>
+    <div class="tablewrap">
+      <table>
+        <thead>
+          <tr><th>Modul</th><th>Fitur</th><th>Test case</th><th>Lulus</th><th>Gagal</th></tr>
+        </thead>
+        <tbody>
+          <tr><td>Authentication</td><td>Login dan validasi form</td><td>11</td><td>10</td><td>1</td></tr>
+          <tr><td>Admin</td><td>User Management</td><td>40</td><td>40</td><td>0</td></tr>
+          <tr><td>Admin</td><td>Job Titles</td><td>35</td><td>35</td><td>0</td></tr>
+          <tr><td>Admin</td><td>Organization — Locations</td><td>38</td><td>38</td><td>0</td></tr>
+          <tr><td><strong>Total</strong></td><td></td><td><strong>124</strong></td><td><strong>123</strong></td><td><strong>1</strong></td></tr>
+        </tbody>
+      </table>
+    </div>
+    <p>
+      Test run dijalankan sebagai satu siklus regression bernama <em>Regression Testing v1.0</em>
+      dengan tingkat penyelesaian 124 dari 124. Durasi tiap test case ikut tercatat, sehingga
+      terlihat modul mana yang paling menyita waktu pengujian.
+    </p>
+    <div class="shot filled"><img src="../Assets/qa-orangehrm/qase-run.png" alt="Test run Regression Testing v1.0 di Qase dengan status Passed dan Failed per test case"></div>
+  </section>
+
+  <section>
+    <h2>Jenis pengujian yang dijalankan</h2>
+    <div class="features">
+      <div class="feature">
+        <h3>Validasi form</h3>
+        <p>Field wajib, batas panjang karakter, dan pesan kesalahan yang muncul di tiap kondisi.</p>
+      </div>
+      <div class="feature">
+        <h3>Operasi CRUD</h3>
+        <p>Tambah, ubah, hapus, dan tampil untuk pengguna, jabatan, serta lokasi organisasi.</p>
+      </div>
+      <div class="feature">
+        <h3>Validasi duplikat</h3>
+        <p>Sistem harus menolak nama jabatan atau username yang sudah terpakai.</p>
+      </div>
+      <div class="feature">
+        <h3>Pencarian dan pengurutan</h3>
+        <p>Filter tunggal, filter gabungan, filter kosong, dan tombol reset.</p>
+      </div>
+      <div class="feature">
+        <h3>Unggah berkas</h3>
+        <p>Batas ukuran dan jenis berkas yang diterima pada form yang menyediakannya.</p>
+      </div>
+      <div class="feature">
+        <h3>Exploratory testing</h3>
+        <p>Penelusuran bebas di luar skrip untuk menemukan perilaku yang tidak terpikir saat desain test case.</p>
+      </div>
+    </div>
+    <p>
+      Teknik yang mendasarinya: black box testing, equivalence partitioning, boundary value
+      analysis, dan error guessing — dipakai untuk membatasi jumlah test case tanpa
+      mengorbankan cakupan.
+    </p>
+  </section>
+
+  <section>
+    <h2>Defect yang ditemukan</h2>
+    <figure>
+      <figcaption>
+        <strong>BUG_LOGIN_001 — pesan galat lama tidak dibersihkan.</strong>
+        Setelah percobaan login gagal, aplikasi menampilkan &ldquo;Invalid credentials&rdquo; sebagaimana
+        mestinya. Tapi bila pengguna lalu mengosongkan salah satu field dan menekan Login lagi,
+        pesan lama itu tetap menempel di layar bersama pesan validasi &ldquo;Required&rdquo; yang baru.
+      </figcaption>
+      <div class="shot filled"><img src="../Assets/qa-orangehrm/bug-login-011.png" alt="Halaman login OrangeHRM menampilkan pesan Invalid credentials dan Required secara bersamaan"></div>
+    </figure>
+    <p>
+      Yang membuat ini layak dilaporkan bukan tampilannya, tapi kontradiksinya. Validasi
+      &ldquo;Required&rdquo; berjalan di sisi klien dan menghentikan request sebelum dikirim — artinya
+      tidak ada percobaan autentikasi yang terjadi. Pesan &ldquo;Invalid credentials&rdquo; yang masih
+      terpampang jadi keterangan tentang sesuatu yang barusan tidak pernah dilakukan sistem.
+      Pengguna menghadapi dua pesan yang menunjuk ke penyebab berbeda untuk satu tindakan yang sama.
+    </p>
+    <p>
+      Severity saya tetapkan <strong>Low</strong> karena fungsi login tidak terganggu dan tidak ada
+      data yang salah tersimpan, tapi priority <strong>Medium</strong> karena letaknya di halaman
+      pertama yang dilihat setiap pengguna. Dugaan penyebabnya, status galat autentikasi tidak
+      dibersihkan sebelum validasi klien dijalankan — dan itu saya tulis eksplisit sebagai asumsi,
+      karena tanpa akses source code penyebab pastinya tidak bisa dipastikan.
+    </p>
+  </section>
+
+  <section>
+    <h2>Pengelolaan test case</h2>
+    <p>
+      Seluruh test case dirapikan jadi enam suite di Qase, lengkap dengan langkah, data uji,
+      dan hasil yang diharapkan. Struktur ini yang membuat satu siklus regression bisa dijalankan
+      ulang oleh orang lain tanpa perlu bertanya.
+    </p>
+    <div class="shot filled"><img src="../Assets/qa-orangehrm/qase-suites.png" alt="Struktur test suite OrangeHRM di Qase"></div>
+    <p>
+      Di repositori, dokumentasinya dipisah mengikuti urutan kerja QA: rencana uji, skenario,
+      test case, catatan eksekusi, laporan bug, lalu laporan ringkasan. Pemisahan itu disengaja —
+      skenario menjawab <em>apa yang perlu dipastikan</em>, test case menjawab <em>bagaimana
+      memastikannya</em>, dan keduanya berubah dengan alasan yang berbeda.
+    </p>
+    <div class="shot filled"><img src="../Assets/qa-orangehrm/admin-user.png" alt="Bukti eksekusi test case modul Admin User Management"></div>
+  </section>
+
+  <section>
+    <h2>Yang saya pelajari</h2>
+    <p>
+      Angka lulus 99% pada awalnya terasa seperti kabar baik. Setelah dipikir lagi, itu justru
+      pertanyaan: apakah aplikasinya memang sekuat itu, atau test case saya yang terlalu ramah?
+    </p>
+    <p>
+      Membaca ulang test case yang saya tulis, polanya kelihatan. Sebagian besar menguji jalur
+      yang diperkirakan berhasil — isi form dengan benar, simpan, pastikan tersimpan. Test case
+      yang benar-benar menekan sistem jumlahnya jauh lebih sedikit, dan satu-satunya defect yang
+      ketemu justru datang dari sana: dari urutan tindakan yang aneh, yaitu gagal login lalu
+      mengosongkan field.
+    </p>
+    <p>
+      Pelajarannya, <strong>test case cenderung mewarisi asumsi penulisnya.</strong> Kalau saya
+      membayangkan pengguna yang tertib, saya akan menulis pengujian untuk pengguna yang tertib,
+      dan hasilnya hijau semua. Di siklus berikutnya proporsinya saya ubah: lebih banyak skenario
+      negatif dan urutan tindakan yang tidak lazim, karena di situlah bug sebenarnya tinggal.
+    </p>
+  </section>
+
+  <section>
+    <h2>Tahap berikutnya</h2>
+    <ul>
+      <li>Memperluas cakupan ke modul PIM, Leave, dan Recruitment.</li>
+      <li>Menambahkan verifikasi data lewat SQL untuk memastikan yang tampil di layar sama dengan yang tersimpan.</li>
+      <li>Mengotomasi skenario regression yang sudah stabil memakai Playwright.</li>
+    </ul>
+  </section>
+
+  <div class="note">
+    <p>
+      <strong>Akses dokumentasi.</strong> Rencana uji, skenario, 124 test case, catatan eksekusi,
+      laporan bug, laporan ringkasan, dan seluruh bukti tangkapan layar tersedia terbuka di
+      <a href="https://github.com/siKic0l/OrangeHRMdemo-Manual-Testing-Portofolio" target="_blank" rel="noopener">repositori GitHub</a>.
+    </p>
+    <p>
+      OrangeHRM Demo adalah instans percobaan publik yang disediakan pengembangnya untuk
+      dicoba siapa saja. Pengujian dilakukan sebatas fungsionalitas antarmuka, tanpa uji beban
+      maupun pengujian keamanan.
+    </p>
+  </div>
+
+  <footer>
+    <p><a href="../index.html">&larr; Semua project</a></p>
+    <p>Nurrohmi Zaki — nurrohmi.zaki@gmail.com — <a href="https://www.linkedin.com/in/nurrohmi-zaki-78b447294/" target="_blank" rel="noopener">LinkedIn</a></p>
+  </footer>
+
+</div>
+
+</body>
+</html>
