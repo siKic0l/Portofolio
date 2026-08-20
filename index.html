@@ -3,7 +3,33 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Nurrohmi Zaki | Portfolio</title>
+<title>Nurrohmi Zaki — Software Engineer | Portfolio</title>
+<meta name="description" content="Software Engineer shipping client software end to end. 7 documented case studies, 221 test cases, 11 defect reports. Seeking a Project Management internship.">
+<meta name="author" content="Nurrohmi Zaki">
+<link rel="canonical" href="https://zaki-portofolio.vercel.app/">
+<meta name="theme-color" content="#181818">
+
+<!-- Ikon tab: SVG lebih tajam di segala ukuran, PNG sebagai cadangan -->
+<link rel="icon" type="image/svg+xml" href="Assets/favicon.svg">
+<link rel="icon" type="image/png" sizes="512x512" href="Assets/favicon-512.png">
+<link rel="apple-touch-icon" href="Assets/favicon-512.png">
+
+<!-- Open Graph: kartu pratinjau saat tautan dibagikan (LinkedIn, WhatsApp, Slack) -->
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="Nurrohmi Zaki">
+<meta property="og:locale" content="en_US">
+<meta property="og:url" content="https://zaki-portofolio.vercel.app/">
+<meta property="og:title" content="Nurrohmi Zaki — Software Engineer, from requirements to release">
+<meta property="og:description" content="Software Engineer shipping client software end to end. 7 documented case studies, 221 test cases, 11 defect reports. Seeking a Project Management internship.">
+<meta property="og:image" content="https://zaki-portofolio.vercel.app/Assets/og-image.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="Nurrohmi Zaki — Software Engineer, from requirements to release. 221 test cases, 11 defect reports, 7 case studies.">
+
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Nurrohmi Zaki — Software Engineer, from requirements to release">
+<meta name="twitter:description" content="Software Engineer shipping client software end to end. 7 documented case studies, 221 test cases, 11 defect reports. Seeking a Project Management internship.">
+<meta name="twitter:image" content="https://zaki-portofolio.vercel.app/Assets/og-image.png">
 <style>
   :root{
     --bg:#181818;
@@ -27,7 +53,8 @@
     margin:0 auto;
     padding:0 24px;
   }
-  section{padding:90px 0;}
+  /* scroll-margin mencegah judul section tertutup header sticky saat diklik dari menu */
+  section{padding:90px 0;scroll-margin-top:74px;}
   h2{font-size:2.2rem;text-align:center;margin-bottom:12px;}
   .subtitle{color:var(--muted);text-align:center;max-width:600px;margin:0 auto 50px;}
   .accent{color:var(--accent);}
@@ -182,6 +209,16 @@
   .service-card h3{margin-bottom:8px;font-size:1.15rem;}
   .service-card p{color:var(--muted);font-size:0.92rem;}
 
+  /* How I Work: kartu bukti, teksnya lebih panjang jadi dibuat dua kolom */
+  #process .services-grid{grid-template-columns:repeat(auto-fit,minmax(min(400px,100%),1fr));}
+  /* Angka tahap, bukan ikon dekoratif */
+  #process .service-icon{font-weight:700;}
+  .card-link{
+    display:inline-block;margin-top:14px;
+    color:var(--accent);font-size:0.85rem;font-weight:600;
+  }
+  .card-link:hover{text-decoration:underline;}
+
   /* Portfolio */
   .filters{display:flex;justify-content:center;gap:10px;flex-wrap:wrap;margin-bottom:40px;}
   .filter-btn{
@@ -218,6 +255,12 @@
   .timeline-item h4{font-size:1.15rem;margin-bottom:2px;}
   .timeline-item .place{color:var(--muted);font-size:0.9rem;margin-bottom:8px;}
   .timeline-item p{color:var(--muted);font-size:0.92rem;}
+  /* Ringkasan peran, dibuat lebih terang daripada butir di bawahnya */
+  .timeline-item .role-summary{color:var(--text);font-size:0.95rem;margin-bottom:10px;}
+  .timeline-item ul{margin:0;padding-left:18px;color:var(--muted);font-size:0.92rem;}
+  .timeline-item li{margin-bottom:7px;}
+  .timeline-item li:last-child{margin-bottom:0;}
+  .timeline-item li strong{color:var(--text);font-weight:600;}
 
   #experience{background:var(--bg-alt);}
 
@@ -321,6 +364,11 @@
     section{padding:56px 0;}
     #about .container{padding-top:20px;padding-bottom:36px;}
     .about-head{gap:28px;}
+    /* Foto dikecilkan agar paragraf pembuka naik ke layar pertama */
+    .avatar{width:190px;height:190px;border-width:4px;}
+    /* Navbar dirapatkan agar tombol Contact Me tidak pecah dua baris */
+    .logo{font-size:0.95rem;letter-spacing:0.5px;}
+    nav .btn{padding:9px 14px;white-space:nowrap;}
     /* Ditumpuk agar pemisah titik tidak tersangkut di awal baris saat membungkus */
     .role-line{flex-direction:column;align-items:flex-start;gap:4px;font-size:0.95rem;}
     .role-line .sep{display:none;}
@@ -331,7 +379,7 @@
   }
 
   @media (max-width:360px){
-    .avatar{width:100%;max-width:240px;height:auto;aspect-ratio:1/1;}
+    .avatar{width:160px;height:160px;}
     .container{padding:0 16px;}
     .about-intro h1{font-size:1.8rem;}
     h2{font-size:1.5rem;}
@@ -346,9 +394,10 @@
     <ul class="nav-links" id="nav-links">
       <li><a href="#about">About</a></li>
       <li><a href="#skills">Skills</a></li>
-      <li><a href="#portfolio">Portfolio</a></li>
+      <li><a href="#process">How I Work</a></li>
       <li><a href="#education">Education</a></li>
       <li><a href="#experience">Experience</a></li>
+      <li><a href="#portfolio">Portfolio</a></li>
     </ul>
     <button class="btn" data-open-contact>Contact Me</button>
     <button class="nav-toggle" aria-label="Buka menu" aria-controls="nav-links" aria-expanded="false">
@@ -456,96 +505,40 @@
       <li>Android Development (Kotlin)</li>
     </ul>
 
-    <div class="services-grid">
-      <div class="service-card">
-        <div class="service-icon">▢</div>
-        <h3>Web Development</h3>
-        <p>Full-stack responsive web apps using Next.js, React, TypeScript, JavaScript, and Tailwind CSS.</p>
-      </div>
-      <div class="service-card">
-        <div class="service-icon">◫</div>
-        <h3>Backend &amp; Database</h3>
-        <p>Relational database design and scalable backend architecture using Supabase (PostgreSQL).</p>
-      </div>
-      <div class="service-card">
-        <div class="service-icon">◧</div>
-        <h3>Desktop &amp; Game Software</h3>
-        <p>Desktop apps with Electron.js and interactive game systems with Roblox Studio &amp; Luau (Lua).</p>
-      </div>
-      <div class="service-card">
-        <div class="service-icon">◨</div>
-        <h3>Quality Assurance</h3>
-        <p>Test case design, manual API and web application testing, defect reporting, and test execution management using Postman and Qase.io.</p>
-      </div>
-    </div>
   </div>
 </section>
 
-<!-- PORTFOLIO -->
-<section id="portfolio">
+<!-- HOW I WORK -->
+<section id="process">
   <div class="container">
-    <h2>My <span class="accent">Projects</span></h2>
-    <p class="subtitle">A selection of systems and applications built for real clients and independent projects.</p>
+    <h2>How I <span class="accent">Work</span></h2>
+    <p class="subtitle">The same four steps on every project, whether what ships is a client website or a test suite.</p>
 
-    <div class="filters">
-      <button class="filter-btn active" data-filter="all">All</button>
-      <button class="filter-btn" data-filter="web">Web</button>
-      <button class="filter-btn" data-filter="system">Business System</button>
-      <button class="filter-btn" data-filter="desktop">Desktop</button>
-      <button class="filter-btn" data-filter="game">Game</button>
-      <button class="filter-btn" data-filter="qa">QA / Testing</button>
-    </div>
-
-    <div class="projects-grid">
-      <a class="project-card" data-cat="qa" href="Project/qa-restful-booker.html" style="display:block">
-        <div class="project-thumb"><img src="Assets/qa-api/500-missing-firstname.png" alt="Postman menampilkan 500 Internal Server Error pada endpoint create booking" style="width:100%;height:100%;object-fit:cover;object-position:left top;"></div>
-        <div class="project-info">
-          <span class="tag">QA</span>
-          <h4>API Testing — Restful Booker</h4>
-        </div>
-      </a>
-      <a class="project-card" data-cat="qa" href="Project/qa-orangehrm.html" style="display:block">
-        <div class="project-thumb"><img src="Assets/qa-orangehrm/qase-run.png" alt="Test run OrangeHRM di Qase dengan status Passed dan Failed" style="width:100%;height:100%;object-fit:cover;object-position:left top;"></div>
-        <div class="project-info">
-          <span class="tag">QA</span>
-          <h4>Manual Testing — OrangeHRM</h4>
-        </div>
-      </a>
-      <a class="project-card" data-cat="web" href="Project/blastid.html" style="display:block">
-        <div class="project-thumb"><img src="Assets/companywebsite/blastid/Hero1ID.png" alt="BLAST ID website hero" style="width:100%;height:100%;object-fit:cover;"></div>
-        <div class="project-info">
-          <span class="tag">Web</span>
-          <h4>BLAST ID — Company Profile</h4>
-        </div>
-      </a>
-      <a class="project-card" data-cat="web" href="Project/aikooarts.html" style="display:block">
-        <div class="project-thumb"><img src="Assets/companywebsite/aikooarts/hero.png" alt="Aikoo Arts website hero" style="width:100%;height:100%;object-fit:cover;"></div>
-        <div class="project-info">
-          <span class="tag">Web</span>
-          <h4>Aikoo Arts — Company Profile</h4>
-        </div>
-      </a>
-      <a class="project-card" data-cat="system" href="Project/warehouse.html" style="display:block">
-        <div class="project-thumb"><img src="Assets/warehouse/warehouse_dashboard.png" alt="Warehouse Management System dashboard" style="width:100%;height:100%;object-fit:cover;"></div>
-        <div class="project-info">
-          <span class="tag">Business System</span>
-          <h4>Warehouse Management System</h4>
-        </div>
-      </a>
-      <a class="project-card" data-cat="desktop" href="Project/arcade.html" style="display:block">
-        <div class="project-thumb"><img src="Assets/spinwheel/spinwheel_wheel.png" alt="Super Spin arcade wheel" style="width:100%;height:100%;object-fit:cover;"></div>
-        <div class="project-info">
-          <span class="tag">Desktop</span>
-          <h4>Arcade Game Software (Electron.js)</h4>
-        </div>
-      </a>
-      <a class="project-card" data-cat="game" href="Project/roblox.html" style="display:block">
-        <div class="project-thumb"><img src="Assets/roblox/first.png" alt="Kimi No Landly world" style="width:100%;height:100%;object-fit:cover;"></div>
-        <div class="project-info">
-          <span class="tag">Game</span>
-          <h4>Roblox Game (Murasaki Creation)</h4>
-        </div>
-      </a>
+    <div class="services-grid">
+      <div class="service-card">
+        <div class="service-icon">1</div>
+        <h3>Understand the need</h3>
+        <p>BLAST ID served brands from Djarum to regional banks, but its event portfolio was scattered across social media — prospective clients had nowhere to check the company's track record before making contact. Every case study here opens with the client's three core requirements, not a tech stack.</p>
+        <a class="card-link" href="Project/blastid.html">Read the BLAST ID case study →</a>
+      </div>
+      <div class="service-card">
+        <div class="service-icon">2</div>
+        <h3>Decide what ships first</h3>
+        <p>Eight Restful Booker endpoints, grouped into seven suites, with priority agreed before a single test ran — authentication and write operations classed as critical. Knowing what matters most is what makes a plan survive contact with a deadline.</p>
+        <a class="card-link" href="Project/qa-restful-booker.html">See how it was scoped →</a>
+      </div>
+      <div class="service-card">
+        <div class="service-icon">3</div>
+        <h3>Build it, then try to break it</h3>
+        <p>Across a web HRMS and a REST API: 221 test cases and 11 defect reports, each written with reproduction steps, expected versus actual results, and impact. Two cases were recorded as Blocked rather than forced into a pass or fail, because the difference changes what happens next.</p>
+        <a class="card-link" href="Project/qa-orangehrm.html">See the testing work →</a>
+      </div>
+      <div class="service-card">
+        <div class="service-icon">4</div>
+        <h3>Hand it over properly</h3>
+        <p>The Warehouse Management System is used by warehouse staff every day, so shipping it meant more than a Vercel deployment — it meant training the people who would depend on it and leaving documentation they could actually use.</p>
+        <a class="card-link" href="Project/warehouse.html">Read the warehouse case study →</a>
+      </div>
     </div>
   </div>
 </section>
@@ -572,7 +565,7 @@
 <section id="experience">
   <div class="container">
     <h2>Work <span class="accent">Experience</span></h2>
-    <p class="subtitle">Professional and independent development experience.</p>
+    <p class="subtitle">Building and delivering software for real clients and users.</p>
 
     <div class="timeline">
       <div class="timeline-item">
@@ -580,15 +573,96 @@
         <div class="period">March 2026 - Present</div>
         <h4>IT Developer (Full-Time)</h4>
         <div class="place">BLAST ID Event Organizer, Pemalang</div>
-        <p>Designed and developed a Company Profile Website, built a custom Warehouse Management System with inventory tracking and asset lending features, and developed a desktop-based Arcade Game Software using Electron.js. Designed relational databases and scalable backend architecture with Supabase (PostgreSQL), built responsive full-stack apps with Next.js, React, TypeScript, JavaScript, and Tailwind CSS, managed deployment via Vercel, and conducted functional testing and user training.</p>
+        <p class="role-summary">Solo IT developer — I own each system end to end, from working out the requirement with stakeholders through to deployment and training the people who use it.</p>
+        <ul>
+          <li><strong>Company Profile Website</strong> — bilingual ID/EN site giving an event organizer that serves Djarum, Yamaha, and regional banks one place for prospective clients to check its track record, replacing a portfolio scattered across social media.</li>
+          <li><strong>Warehouse Management System</strong> — inventory tracking and multi-item asset lending with due-date alerts, global search, CSV import/export, and printable reports. Used by warehouse staff every day.</li>
+          <li><strong>Arcade Game Software</strong> — an Electron.js desktop app run on-site during events, with prize quotas, jackpot mode, and an admin panel operators can adjust between sessions.</li>
+          <li>Worked directly with stakeholders to turn manual operational workflows into digital ones, and designed the relational schema and backend architecture on Supabase (PostgreSQL).</li>
+          <li>Shipped via Vercel, then handled maintenance, bug fixes, release verification, and user training.</li>
+        </ul>
       </div>
       <div class="timeline-item">
         <div class="timeline-dot"></div>
         <div class="period">August 2025 - February 2026</div>
         <h4>Co-Founder &amp; Game Developer</h4>
         <div class="place">Murasaki Creation (Independent Game Studio), Remote</div>
-        <p>Co-founded an independent Roblox game studio and led technical development of game systems and features using Roblox Studio and Luau (Lua). Collaborated remotely across the full development lifecycle, applying debugging, functional testing, and performance optimization, while designing modular, maintainable code for scalability.</p>
+        <p class="role-summary">Co-founded a two-person studio working fully remote, and led its technical development.</p>
+        <ul>
+          <li>Built the gameplay systems in Roblox Studio and Luau — progressive fishing, farming, gacha with a pity counter, cooking, mining, inventory and item transfer — plus admin tools for in-game moderation and debugging.</li>
+          <li><strong>Kept my co-founder unblocked</strong> by separating tuning values (drop rarity, growth timing) from core logic, so the design side could balance gameplay without touching code or waiting on me.</li>
+          <li>Planned, tested, and iterated features remotely across the full cycle, running regression checks on gameplay before each release.</li>
+        </ul>
       </div>
+    </div>
+  </div>
+</section>
+
+<!-- PORTFOLIO -->
+<section id="portfolio">
+  <div class="container">
+    <h2>My <span class="accent">Projects</span></h2>
+    <p class="subtitle">A selection of systems and applications built for real clients and independent projects.</p>
+
+    <div class="filters">
+      <button class="filter-btn active" data-filter="all">All</button>
+      <button class="filter-btn" data-filter="web">Web</button>
+      <button class="filter-btn" data-filter="system">Business System</button>
+      <button class="filter-btn" data-filter="desktop">Desktop</button>
+      <button class="filter-btn" data-filter="game">Game</button>
+      <button class="filter-btn" data-filter="qa">QA / Testing</button>
+    </div>
+
+    <div class="projects-grid">
+      <a class="project-card" data-cat="web" href="Project/blastid.html" style="display:block">
+        <div class="project-thumb"><img src="Assets/companywebsite/blastid/Hero1ID.png" alt="BLAST ID website hero" style="width:100%;height:100%;object-fit:cover;"></div>
+        <div class="project-info">
+          <span class="tag">Web</span>
+          <h4>BLAST ID — Company Profile</h4>
+        </div>
+      </a>
+      <a class="project-card" data-cat="system" href="Project/warehouse.html" style="display:block">
+        <div class="project-thumb"><img src="Assets/warehouse/warehouse_dashboard.png" alt="Warehouse Management System dashboard" style="width:100%;height:100%;object-fit:cover;"></div>
+        <div class="project-info">
+          <span class="tag">Business System</span>
+          <h4>Warehouse Management System</h4>
+        </div>
+      </a>
+      <a class="project-card" data-cat="qa" href="Project/qa-restful-booker.html" style="display:block">
+        <div class="project-thumb"><img src="Assets/qa-api/500-missing-firstname.png" alt="Postman menampilkan 500 Internal Server Error pada endpoint create booking" style="width:100%;height:100%;object-fit:cover;object-position:left top;"></div>
+        <div class="project-info">
+          <span class="tag">QA</span>
+          <h4>API Testing — Restful Booker</h4>
+        </div>
+      </a>
+      <a class="project-card" data-cat="qa" href="Project/qa-orangehrm.html" style="display:block">
+        <div class="project-thumb"><img src="Assets/qa-orangehrm/qase-run.png" alt="Test run OrangeHRM di Qase dengan status Passed dan Failed" style="width:100%;height:100%;object-fit:cover;object-position:left top;"></div>
+        <div class="project-info">
+          <span class="tag">QA</span>
+          <h4>Manual Testing — OrangeHRM</h4>
+        </div>
+      </a>
+      <a class="project-card" data-cat="web" href="Project/aikooarts.html" style="display:block">
+        <div class="project-thumb"><img src="Assets/companywebsite/aikooarts/hero.png" alt="Aikoo Arts website hero" style="width:100%;height:100%;object-fit:cover;"></div>
+        <div class="project-info">
+          <span class="tag">Web</span>
+          <h4>Aikoo Arts — Company Profile</h4>
+        </div>
+      </a>
+      <a class="project-card" data-cat="desktop" href="Project/arcade.html" style="display:block">
+        <div class="project-thumb"><img src="Assets/spinwheel/spinwheel_wheel.png" alt="Super Spin arcade wheel" style="width:100%;height:100%;object-fit:cover;"></div>
+        <div class="project-info">
+          <span class="tag">Desktop</span>
+          <h4>Arcade Game Software (Electron.js)</h4>
+        </div>
+      </a>
+      <a class="project-card" data-cat="game" href="Project/roblox.html" style="display:block">
+        <div class="project-thumb"><img src="Assets/roblox/first.png" alt="Kimi No Landly world" style="width:100%;height:100%;object-fit:cover;"></div>
+        <div class="project-info">
+          <span class="tag">Game</span>
+          <h4>Roblox Game (Murasaki Creation)</h4>
+        </div>
+      </a>
     </div>
   </div>
 </section>
