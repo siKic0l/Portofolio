@@ -73,13 +73,28 @@
 
   /* Hero / About Me */
   #about .container{
-    display:flex;align-items:center;justify-content:space-between;gap:40px;flex-wrap:wrap;
     padding-top:70px;padding-bottom:70px;
   }
-  .about-text{flex:1;min-width:280px;}
-  .about-text .greet{color:var(--accent);font-weight:600;margin-bottom:6px;}
-  .about-text h1{font-size:2.8rem;line-height:1.2;margin-bottom:18px;}
-  .about-text p{color:var(--muted);max-width:460px;margin-bottom:28px;}
+  /* Baris atas: sapaan dan judul di kiri, foto di kanan */
+  .about-head{
+    display:flex;align-items:center;justify-content:space-between;gap:40px;flex-wrap:wrap;
+  }
+  .about-intro{flex:1;min-width:280px;}
+  .about-intro .greet{color:var(--accent);font-weight:600;margin-bottom:6px;}
+  .about-intro h1{font-size:2.8rem;line-height:1.2;}
+  /* Dua arah berikutnya, sengaja dibuat lebih ringan daripada judul utama */
+  .role-line{
+    color:var(--muted);
+    font-size:1rem;
+    margin-top:14px;
+    display:flex;flex-wrap:wrap;align-items:center;gap:8px 14px;
+  }
+  .role-line strong{color:var(--text);font-weight:600;}
+  .role-line .sep{color:var(--border);}
+  /* Uraian panjang mengalir penuh di bawahnya, dibatasi lebar baca yang nyaman */
+  .about-body{max-width:68ch;margin-top:38px;}
+  .about-body p{color:var(--muted);margin-bottom:16px;}
+  .about-body p:last-of-type{margin-bottom:28px;}
   .avatar{
     width:280px;height:280px;border-radius:50%;
     background:linear-gradient(135deg,var(--accent),#c2410c);
@@ -283,12 +298,17 @@
       font-size:1rem;
     }
     .nav-links a:hover{background:var(--bg-alt);color:var(--text);}
-    .about-text h1{font-size:2.1rem;}
+    .about-intro h1{font-size:2.1rem;}
     /* Judul section dikecilkan agar tidak melampaui judul halaman detail */
     h2{font-size:1.7rem;}
     /* Jarak vertikal dirapatkan agar isi tidak terdorong jauh ke bawah */
     section{padding:56px 0;}
-    #about .container{padding-top:20px;padding-bottom:36px;gap:28px;}
+    #about .container{padding-top:20px;padding-bottom:36px;}
+    .about-head{gap:28px;}
+    /* Ditumpuk agar pemisah titik tidak tersangkut di awal baris saat membungkus */
+    .role-line{flex-direction:column;align-items:flex-start;gap:4px;font-size:0.95rem;}
+    .role-line .sep{display:none;}
+    .about-body{margin-top:28px;}
     .subtitle{margin-bottom:32px;}
     .services-grid{margin-top:32px;}
     .filters{margin-bottom:28px;}
@@ -297,7 +317,7 @@
   @media (max-width:360px){
     .avatar{width:100%;max-width:240px;height:auto;aspect-ratio:1/1;}
     .container{padding:0 16px;}
-    .about-text h1{font-size:1.8rem;}
+    .about-intro h1{font-size:1.8rem;}
     h2{font-size:1.5rem;}
   }
 </style>
@@ -329,17 +349,30 @@
 <!-- ABOUT ME -->
 <section id="about">
   <div class="container">
-    <div class="about-text">
-      <p class="greet">Hi, I am</p>
-      <h1>Nurrohmi Zaki<br><span class="accent">Software</span> Engineer — Full-Stack Development &amp; <span class="accent">Quality Assurance</span></h1>
-      <p>Fresh graduate in Informatics with hands-on experience in full-stack web development and custom software engineering — from company profile websites to warehouse management systems and desktop arcade software tailored to real business workflows. I now apply that same engineering discipline to Quality Assurance — two documented testing projects covering a REST API and a web-based HRMS, with 221 test cases, 11 defect reports, and test execution managed in Qase.io.</p>
+    <div class="about-head">
+      <div class="about-intro">
+        <p class="greet">Hi, I am</p>
+        <h1>Nurrohmi Zaki<br><span class="accent">Software Engineer</span> — from <span class="accent">requirements to release</span></h1>
+        <p class="role-line">
+          <span>Expanding into <strong>Quality Assurance</strong></span>
+          <span class="sep" aria-hidden="true">•</span>
+          <span>Seeking a <strong>Project Management</strong> internship</span>
+        </p>
+      </div>
+      <div class="avatar"><img src="Assets/profile.jpg" alt="Nurrohmi Zaki"></div>
+    </div>
+
+    <div class="about-body">
+      <p>I’m an Informatics graduate and IT Developer. Every project I’ve shipped started the same way — working out with the client what they actually needed, then turning that into something their staff use every day.</p>
+      <p>At BLAST ID I’ve delivered company profile websites, a custom Warehouse Management System with inventory tracking and asset lending, and desktop arcade software built in Electron.js — using Next.js, React, TypeScript, Tailwind CSS, and Supabase (PostgreSQL). Beyond the code, that meant scoping requirements with stakeholders, handling deployment, and training the people who would use it.</p>
+      <p>I also test what I build. My QA portfolio covers the OrangeHRM HRMS and the Restful Booker API — <strong>221 test cases</strong> and <strong>11 defect reports</strong>, scoped and prioritized upfront, then executed and tracked in Qase.io with Postman for API work.</p>
+      <p>Project management is the direction I’m heading next. It’s work I already do on every build — pinning down what is actually needed, deciding what ships first, and checking the result against what was promised — just at the scale of a team rather than a single project.</p>
       <button class="btn" onclick="location.href='mailto:nurrohmi.zaki@gmail.com'">Hire Me</button>
       <div class="socials">
         <a href="https://www.linkedin.com/in/nurrohmi-zaki-78b447294/" target="_blank" rel="noopener">In</a>
         <a href="mailto:nurrohmi.zaki@gmail.com">✉</a>
       </div>
     </div>
-    <div class="avatar"><img src="Assets/profile.jpg" alt="Nurrohmi Zaki"></div>
   </div>
 </section>
 
