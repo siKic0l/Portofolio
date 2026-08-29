@@ -3,8 +3,52 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>API Testing — Restful Booker API</title>
+  <title>API Testing — Restful Booker API | Nurrohmi Zaki</title>
   <meta name="description" content="Studi kasus QA: pengujian manual 97 test case pada Restful Booker API memakai Postman dan Qase, menghasilkan 10 laporan bug.">
+  <link rel="canonical" href="https://zaki-portofolio.vercel.app/Project/qa-restful-booker.html">
+  <meta name="author" content="Nurrohmi Zaki">
+  <meta name="theme-color" content="#181818">
+
+  <link rel="icon" type="image/svg+xml" href="../Assets/favicon.svg">
+  <link rel="icon" type="image/png" sizes="512x512" href="../Assets/favicon-512.png">
+  <link rel="apple-touch-icon" href="../Assets/favicon-512.png">
+
+  <!-- Kartu pratinjau saat studi kasus ini di-share ke WhatsApp/LinkedIn -->
+  <meta property="og:type" content="article">
+  <meta property="og:site_name" content="Nurrohmi Zaki">
+  <meta property="og:locale" content="id_ID">
+  <meta property="og:url" content="https://zaki-portofolio.vercel.app/Project/qa-restful-booker.html">
+  <meta property="og:title" content="API Testing — Restful Booker API | Nurrohmi Zaki">
+  <meta property="og:description" content="Studi kasus QA: pengujian manual 97 test case pada Restful Booker API memakai Postman dan Qase, menghasilkan 10 laporan bug.">
+  <meta property="og:image" content="https://zaki-portofolio.vercel.app/Assets/qa-api/500-missing-firstname.png">
+  <meta property="og:image:width" content="1149">
+  <meta property="og:image:height" content="518">
+  <meta property="og:image:alt" content="API Testing — Restful Booker API | Nurrohmi Zaki">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="API Testing — Restful Booker API | Nurrohmi Zaki">
+  <meta name="twitter:description" content="Studi kasus QA: pengujian manual 97 test case pada Restful Booker API memakai Postman dan Qase, menghasilkan 10 laporan bug.">
+  <meta name="twitter:image" content="https://zaki-portofolio.vercel.app/Assets/qa-api/500-missing-firstname.png">
+
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "CreativeWork",
+    "name": "API Testing — Restful Booker API",
+    "url": "https://zaki-portofolio.vercel.app/Project/qa-restful-booker.html",
+    "inLanguage": "id",
+    "description": "Studi kasus QA: pengujian manual 97 test case pada Restful Booker API memakai Postman dan Qase, menghasilkan 10 laporan bug.",
+    "author": {
+      "@type": "Person",
+      "name": "Nurrohmi Zaki",
+      "url": "https://zaki-portofolio.vercel.app/"
+    },
+    "isPartOf": {
+      "@type": "CollectionPage",
+      "name": "Portofolio Nurrohmi Zaki",
+      "url": "https://zaki-portofolio.vercel.app/id.html"
+    }
+  }
+  </script>
   <link rel="stylesheet" href="../Assets/style.css">
 </head>
 <body>
@@ -161,7 +205,7 @@
         Perilaku yang sama muncul pada <code>lastname</code> yang hilang, body <code>{}</code> kosong,
         dan seluruh field bernilai <code>null</code>.
       </figcaption>
-      <div class="shot filled"><img src="../Assets/qa-api/500-missing-firstname.png" alt="Postman menampilkan respons 500 Internal Server Error saat field firstname dihilangkan"></div>
+      <div class="shot filled"><img src="../Assets/qa-api/500-missing-firstname.webp" width="1149" height="518" loading="lazy" decoding="async" alt="Postman menampilkan respons 500 Internal Server Error saat field firstname dihilangkan"></div>
     </figure>
 
     <figure>
@@ -171,7 +215,7 @@
         Ini memperkuat dugaan bahwa pengecekan field wajib berjalan setelah data terlanjur
         diproses, bukan sebelumnya.
       </figcaption>
-      <div class="shot filled"><img src="../Assets/qa-api/500-empty-body.png" alt="Postman menampilkan 500 Internal Server Error saat body request berupa JSON kosong"></div>
+      <div class="shot filled"><img src="../Assets/qa-api/500-empty-body.webp" width="1036" height="695" loading="lazy" decoding="async" alt="Postman menampilkan 500 Internal Server Error saat body request berupa JSON kosong"></div>
     </figure>
 
     <figure>
@@ -185,7 +229,7 @@
         Statusnya lulus terhadap kontrak API, tapi melanggar aturan bisnis yang masuk akal
         untuk sistem pemesanan hotel.
       </figcaption>
-      <div class="shot filled"><img src="../Assets/qa-api/totalprice-string.png" alt="Postman menampilkan API menerima nilai string pada field totalprice"></div>
+      <div class="shot filled"><img src="../Assets/qa-api/totalprice-string.webp" width="1362" height="718" loading="lazy" decoding="async" alt="Postman menampilkan API menerima nilai string pada field totalprice"></div>
     </figure>
   </section>
 
@@ -197,7 +241,7 @@
       Fail berarti sistem berperilaku salah, Blocked berarti pengujiannya sendiri belum bisa
       dijalankan — dan keduanya menuntut tindak lanjut yang berbeda.
     </p>
-    <div class="shot filled"><img src="../Assets/qa-api/patch-blocked.png" alt="Bukti eksekusi test case Partial Update yang berstatus Blocked"></div>
+    <div class="shot filled"><img src="../Assets/qa-api/patch-blocked.webp" width="1138" height="445" loading="lazy" decoding="async" alt="Bukti eksekusi test case Partial Update yang berstatus Blocked"></div>
   </section>
 
   <section>

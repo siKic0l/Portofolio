@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://zaki-portofolio.vercel.app/sitemap.xml
